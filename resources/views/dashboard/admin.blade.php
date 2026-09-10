@@ -2,6 +2,7 @@
 
 @section('content')
 <!-- Section 1: Ringkasan Umum Mahasiswa & Bimbingan -->
+<div class="mb-4">
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
         <h5 class="fw-bold mb-0 text-slate-800"><i class="bi bi-pie-chart-fill text-primary me-2"></i>Ringkasan Umum & Progress</h5>
         <div class="d-flex align-items-center gap-2">

@@ -62,6 +62,8 @@
         /* Sidebar Styling */
         .sidebar {
             min-height: 100vh;
+            max-height: 100vh;
+            overflow-y: auto;
             background: linear-gradient(180deg, #1e293b 0%, var(--app-sidebar-bg) 100%);
             border-right: 1px solid var(--app-sidebar-border);
             position: sticky;
@@ -69,41 +71,51 @@
             z-index: 100;
             display: flex;
             flex-direction: column;
-            padding: 1.5rem 1.25rem;
+            padding: 1.15rem 0.9rem;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
         }
 
         .brand-mark {
             display: flex;
             align-items: center;
-            gap: 0.85rem;
-            padding-bottom: 1.25rem;
+            gap: 0.75rem;
+            padding-bottom: 0.9rem;
             border-bottom: 1px solid var(--app-sidebar-border);
         }
 
         .brand-icon {
-            width: 2.65rem;
-            height: 2.65rem;
-            border-radius: 0.85rem;
+            width: 2.35rem;
+            height: 2.35rem;
+            border-radius: 0.75rem;
             background: linear-gradient(135deg, #4f46e5 0%, #0d9488 100%);
             color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             box-shadow: 0 8px 16px -4px rgba(79, 70, 229, 0.4);
+            flex-shrink: 0;
         }
 
         .brand-title {
             font-family: var(--font-heading);
             font-weight: 800;
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             color: #ffffff;
             letter-spacing: -0.01em;
             line-height: 1.1;
         }
 
         .brand-subtitle {
-            font-size: 0.725rem;
+            font-size: 0.685rem;
             color: #94a3b8;
             font-weight: 500;
         }
@@ -111,18 +123,18 @@
         .user-profile-widget {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 0.85rem;
-            padding: 0.85rem;
-            margin: 1.25rem 0;
+            border-radius: 0.75rem;
+            padding: 0.65rem 0.75rem;
+            margin: 0.85rem 0;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.65rem;
         }
 
         .user-avatar {
-            width: 2.25rem;
-            height: 2.25rem;
-            border-radius: 0.65rem;
+            width: 2.1rem;
+            height: 2.1rem;
+            border-radius: 0.55rem;
             background: rgba(79, 70, 229, 0.2);
             border: 1px solid rgba(79, 70, 229, 0.4);
             color: #818cf8;
@@ -130,15 +142,16 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            flex-shrink: 0;
         }
 
         .role-badge {
-            font-size: 0.675rem;
+            font-size: 0.65rem;
             font-weight: 700;
             letter-spacing: 0.05em;
-            padding: 0.2rem 0.5rem;
-            border-radius: 0.4rem;
+            padding: 0.15rem 0.45rem;
+            border-radius: 0.35rem;
             text-transform: uppercase;
             display: inline-block;
         }
@@ -148,36 +161,36 @@
 
         .nav-label {
             color: #64748b;
-            font-size: 0.7rem;
+            font-size: 0.685rem;
             font-weight: 700;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            margin: 0.75rem 0 0.5rem 0.5rem;
+            margin: 0.5rem 0 0.4rem 0.4rem;
         }
 
         .sidebar-nav {
             display: flex;
             flex-direction: column;
-            gap: 0.35rem;
+            gap: 0.25rem;
             flex: 1;
         }
 
         .sidebar-nav a {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.7rem 0.9rem;
+            gap: 0.65rem;
+            padding: 0.525rem 0.75rem;
             color: var(--app-sidebar-text);
             text-decoration: none;
-            border-radius: 0.75rem;
+            border-radius: 0.65rem;
             font-weight: 500;
-            font-size: 0.8875rem;
+            font-size: 0.835rem;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
         }
 
         .sidebar-nav a i {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #64748b;
             transition: color 0.2s ease;
         }
@@ -509,6 +522,8 @@
         @media (max-width: 991.98px) {
             .sidebar {
                 min-height: auto;
+                max-height: none;
+                overflow-y: visible;
                 position: static;
             }
             .content-area {
