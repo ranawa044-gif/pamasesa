@@ -2,9 +2,16 @@
 
 @section('content')
 <!-- Section 1: Ringkasan Umum Mahasiswa & Bimbingan -->
-<div class="mb-4">
-    <div class="d-flex align-items-center justify-content-between mb-3">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
         <h5 class="fw-bold mb-0 text-slate-800"><i class="bi bi-pie-chart-fill text-primary me-2"></i>Ringkasan Umum & Progress</h5>
+        <div class="d-flex align-items-center gap-2">
+            <a href="{{ route('admin.backup.index') }}" class="btn btn-sm btn-outline-primary shadow-sm d-inline-flex align-items-center gap-1">
+                <i class="bi bi-database-fill-down"></i> Panel Backup
+            </a>
+            <a href="{{ route('admin.backup.download') }}" class="btn btn-sm btn-primary shadow-sm d-inline-flex align-items-center gap-1">
+                <i class="bi bi-cloud-arrow-down-fill"></i> Download .SQL
+            </a>
+        </div>
     </div>
     <div class="row g-3">
         <div class="col-md-4 col-lg">

@@ -583,6 +583,9 @@
                     <a class="{{ request()->routeIs('admin.announcements.*') ? 'active' : '' }}" href="{{ route('admin.announcements.index') }}">
                         <i class="bi bi-megaphone-fill"></i> Informasi & Dokumen
                     </a>
+                    <a class="{{ request()->routeIs('admin.backup.*') ? 'active' : '' }}" href="{{ route('admin.backup.index') }}">
+                        <i class="bi bi-database-fill-down"></i> Backup Database
+                    </a>
                 @elseif(auth()->user()->role === 'MAHASISWA')
                     <a class="{{ (request()->routeIs('student.final-project.*') || request()->routeIs('student.pengajuan.*')) ? 'active' : '' }}" href="{{ route('student.pengajuan.create') }}">
                         <i class="bi bi-file-earmark-text-fill"></i> Pengajuan Judul

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BackupController;
 use App\Http\Controllers\Admin\FinalDefenseAutoScheduleController;
 use App\Http\Controllers\Admin\FinalDefenseController as AdminFinalDefenseController;
 use App\Http\Controllers\Admin\LecturerController;
@@ -61,6 +62,8 @@ Route::middleware('auth')->group(function (): void {
         Route::get('supervisors/{finalProject}/edit', [SupervisorController::class, 'edit'])->name('supervisors.edit');
         Route::put('supervisors/{finalProject}', [SupervisorController::class, 'update'])->name('supervisors.update');
         Route::resource('announcements', AnnouncementController::class)->except('show');
+        Route::get('backup', [BackupController::class, 'index'])->name('backup.index');
+        Route::get('backup/download', [BackupController::class, 'download'])->name('backup.download');
     });
 
     Route::middleware('role:MAHASISWA')->prefix('student')->name('student.')->group(function (): void {
