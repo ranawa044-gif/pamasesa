@@ -447,6 +447,7 @@
             font-size: 0.85rem;
         }
     </style>
+    <link rel="icon" href="{{ asset('favicon.jpg') }}" type="image/jpg">
 </head>
 <body>
 

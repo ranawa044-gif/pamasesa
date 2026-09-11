@@ -580,6 +580,7 @@
             }
         }
     </style>
+    <link rel="icon" href="{{ asset('favicon.jpg') }}" type="image/jpg">
 </head>
 <body>
     <!-- Header Mobile (Top Bar) -->

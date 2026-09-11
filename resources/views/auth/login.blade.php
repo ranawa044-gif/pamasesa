@@ -163,6 +163,7 @@
             color: var(--app-primary) !important;
         }
     </style>
+    <link rel="icon" href="{{ asset('favicon.jpg') }}" type="image/jpg">
 </head>
 <body>
 <div id="particles-js"></div>
