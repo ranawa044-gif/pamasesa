@@ -78,7 +78,9 @@
                             <span class="text-secondary">{{ $item->pembimbing_tampil }}</span>
                         </td>
                         <td class="text-center">
-                            @if($item->status_pengajuan === 'approved')
+                            @if($item->status_pengajuan === 'acc_seminar')
+                                <span class="badge bg-success px-3 py-2"><i class="bi bi-award-fill me-1"></i>ACC Sempro</span>
+                            @elseif($item->status_pengajuan === 'approved')
                                 <span class="badge bg-success px-3 py-2">Disetujui</span>
                             @elseif($item->status_pengajuan === 'rejected')
                                 <span class="badge bg-danger px-3 py-2">Ditolak</span>

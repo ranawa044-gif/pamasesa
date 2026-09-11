@@ -48,7 +48,8 @@
     $activeStatus = $pengajuanPa?->status_pengajuan ?? strtolower($finalProject?->status ?? '');
     $judulUtama = $pengajuanPa?->judul_tampil ?? $finalProject?->title;
     $detailData = $pengajuanPa?->detail;
-    $isApproved = ($activeStatus === 'approved');
+    $isAccSeminar = ($activeStatus === 'acc_seminar');
+    $isApproved = in_array($activeStatus, ['approved', 'acc_seminar']);
     $isRevision = ($activeStatus === 'revision');
     $isRejected = ($activeStatus === 'rejected');
     $isPending = in_array($activeStatus, ['pending', 'review', 'submitted']);
@@ -63,7 +64,9 @@
                 </div>
                 <div class="stat-label">Status Judul Proyek Akhir</div>
                 <div class="mt-1">
-                    @if($isApproved)
+                    @if($isAccSeminar)
+                        <span class="badge bg-success"><i class="bi bi-award-fill me-1"></i>ACC Seminar Proposal</span>
+                    @elseif($isApproved)
                         <span class="badge bg-success"><i class="bi bi-check-circle-fill me-1"></i>Disetujui</span>
                     @elseif($isRevision)
                         <span class="badge bg-warning text-dark"><i class="bi bi-pencil-square me-1"></i>Perlu Revisi</span>
@@ -204,6 +207,26 @@
                     <div class="mt-3 text-end">
                         <a href="{{ route('student.pengajuan.create') }}" class="btn btn-sm btn-danger shadow-sm">
                             <i class="bi bi-arrow-repeat me-1"></i> Buat Pengajuan Baru
+                        </a>
+                    </div>
+                </div>
+            @elseif($isAccSeminar)
+                <div class="alert alert-success bg-success-subtle border-success border-2 p-3 rounded-3 mb-4 d-flex align-items-center justify-content-between flex-wrap gap-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-award-fill text-success fs-3"></i>
+                        <div>
+                            <h6 class="fw-bold mb-0 text-success-emphasis">Selamat! Seminar Proposal Anda Telah Di-ACC oleh Dosen Pembimbing!</h6>
+                            <div class="small text-slate-700">Dosen pembimbing telah memberikan persetujuan kelayakan Seminar Proposal. Silakan daftarkan jadwal seminar proposal Anda.</div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        @if($pengajuanPa)
+                            <a href="{{ route('student.pengajuan.export-pdf', $pengajuanPa->id) }}" class="btn btn-sm btn-outline-success shadow-sm" target="_blank">
+                                <i class="bi bi-file-earmark-pdf-fill me-1"></i> Form Pengajuan
+                            </a>
+                        @endif
+                        <a href="{{ route('student.seminars.index') }}" class="btn btn-sm btn-success shadow-sm">
+                            <i class="bi bi-calendar-check me-1"></i> Daftar Seminar Proposal
                         </a>
                     </div>
                 </div>

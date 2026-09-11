@@ -46,7 +46,7 @@ class ProgressLogController extends Controller
         }
 
         $finalProject->progressLogs()->create($data + [
-            'status' => 'WAITING',
+            'status' => 'pending',
             'review_note' => null,
         ]);
 

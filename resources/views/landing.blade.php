@@ -1029,7 +1029,7 @@
                             Titik Awal
                         </span>
                         <span class="timeline-date-badge bg-light text-secondary border">
-                            <i class="fa-regular fa-calendar me-1"></i> 15 Sep 2026
+                            <i class="fa-regular fa-calendar me-1"></i> 16 Sep 2026
                         </span>
                     </div>
                     <h5 class="fw-bold fs-5 mb-2 text-slate-900">Sosialisasi & Pembekalan PA</h5>
@@ -1050,7 +1050,7 @@
                             <i class="fa-solid fa-circle-exclamation me-1"></i> PENTING / DEADLINE
                         </span>
                         <span class="timeline-date-badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25">
-                            <i class="fa-solid fa-clock me-1"></i> 05 Okt 2026 • 23:59 WIB
+                            <i class="fa-solid fa-clock me-1"></i> 30 Nov 2026 • 23:59 WIB
                         </span>
                     </div>
                     <h5 class="fw-bold fs-5 mb-1 text-danger">Batas Akhir Pengajuan Judul</h5>
@@ -1075,7 +1075,7 @@
                             Penetapan SK
                         </span>
                         <span class="timeline-date-badge bg-light text-secondary border">
-                            <i class="fa-regular fa-calendar me-1"></i> 15 Okt 2026
+                            <i class="fa-regular fa-calendar me-1"></i> 12 Des 2026
                         </span>
                     </div>
                     <h5 class="fw-bold fs-5 mb-2 text-slate-900">Pengumuman Dosen Pembimbing</h5>
@@ -1096,7 +1096,7 @@
                             Pendaftaran Sempro
                         </span>
                         <span class="timeline-date-badge bg-light text-secondary border">
-                            <i class="fa-regular fa-calendar me-1"></i> 15 Des 2026
+                            <i class="fa-regular fa-calendar me-1"></i> 05 Feb 2027
                         </span>
                     </div>
                     <h5 class="fw-bold fs-5 mb-2 text-slate-900">Batas Pendaftaran Seminar Proposal</h5>
@@ -1117,7 +1117,7 @@
                             Ujian Sempro
                         </span>
                         <span class="timeline-date-badge bg-light text-secondary border">
-                            <i class="fa-regular fa-calendar me-1"></i> 05 – 12 Jan 2027
+                            <i class="fa-regular fa-calendar me-1"></i> 08 – 12 Feb 2027
                         </span>
                     </div>
                     <h5 class="fw-bold fs-5 mb-2 text-slate-900">Pelaksanaan Seminar Proposal</h5>
@@ -1138,7 +1138,7 @@
                             Tenggat Berkas Sidang
                         </span>
                         <span class="timeline-date-badge bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-25">
-                            <i class="fa-solid fa-clock me-1"></i> 15 Jun 2027 • 23:59 WIB
+                            <i class="fa-solid fa-clock me-1"></i> 20 Mei 2027 • 23:59 WIB
                         </span>
                     </div>
                     <h5 class="fw-bold fs-5 mb-2 text-slate-900">Batas Pendaftaran Sidang Akhir</h5>
@@ -1159,7 +1159,7 @@
                             Tahap Final (Kelulusan)
                         </span>
                         <span class="timeline-date-badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">
-                            <i class="fa-solid fa-calendar-check me-1"></i> 01 – 10 Jul 2027
+                            <i class="fa-solid fa-calendar-check me-1"></i> 24 – 28 Mei 2027
                         </span>
                     </div>
                     <h5 class="fw-bold fs-5 mb-2 text-slate-900">Pelaksanaan Sidang Akhir</h5>

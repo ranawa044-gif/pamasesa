@@ -107,7 +107,7 @@ class PengajuanPa extends Model
 
         $detail = $this->detail;
         $status = $overrideStatus ?? match ($this->status_pengajuan) {
-            'approved' => 'APPROVED',
+            'approved', 'acc_seminar' => 'APPROVED',
             'revision' => 'REVISION',
             'rejected' => 'REJECTED',
             default => 'SUBMITTED',
@@ -132,7 +132,7 @@ class PengajuanPa extends Model
                 'status' => $status,
                 'review_note' => $this->catatan_review,
                 'submitted_at' => $this->created_at ?? now(),
-                'approved_at' => $this->status_pengajuan === 'approved' ? ($this->updated_at ?? now()) : null,
+                'approved_at' => in_array($this->status_pengajuan, ['approved', 'acc_seminar'], true) ? ($this->updated_at ?? now()) : null,
             ]
         );
     }

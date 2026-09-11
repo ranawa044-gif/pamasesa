@@ -26,7 +26,7 @@ class PengajuanController extends Controller
             ->latest()
             ->first();
 
-        $lockedSubmission = in_array($pengajuan?->status_pengajuan, ['pending', 'review', 'approved'], true);
+        $lockedSubmission = in_array($pengajuan?->status_pengajuan, ['pending', 'review', 'approved', 'acc_seminar'], true);
 
         return view('student.pengajuan.create', compact('user', 'student', 'pengajuan', 'lockedSubmission'));
     }
@@ -43,7 +43,7 @@ class PengajuanController extends Controller
             ->latest()
             ->first();
 
-        if ($existing && in_array($existing->status_pengajuan, ['pending', 'review', 'approved'], true)) {
+        if ($existing && in_array($existing->status_pengajuan, ['pending', 'review', 'approved', 'acc_seminar'], true)) {
             return redirect()
                 ->route('student.pengajuan.create')
                 ->withErrors(['error' => 'Pengajuan judul sedang diproses atau sudah disetujui, tidak dapat mengajukan ulang.']);

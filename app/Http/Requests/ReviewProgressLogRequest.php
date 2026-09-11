@@ -15,7 +15,7 @@ class ReviewProgressLogRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', Rule::in(['APPROVED', 'REVISION'])],
+            'status' => ['nullable', Rule::in(['pending', 'verified', 'PENDING', 'VERIFIED'])],
             'review_note' => ['nullable', 'string'],
             'review_file' => ['nullable', 'file', 'max:5120', 'mimes:pdf,doc,docx,png,jpg,jpeg'],
         ];

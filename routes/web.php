@@ -94,6 +94,7 @@ Route::middleware('auth')->group(function (): void {
         Route::get('guidances/{finalProject}', [GuidanceController::class, 'show'])->name('guidances.show');
         Route::put('progress/{progressLog}/review', [GuidanceController::class, 'review'])->name('progress.review');
         Route::put('guidances/{finalProject}/approve', [GuidanceController::class, 'approveDefense'])->name('guidances.approve');
+        Route::put('guidances/{finalProject}/acc-seminar', [GuidanceController::class, 'accSeminarProposal'])->name('guidances.acc-seminar');
         // Seminar proposal review
         Route::get('seminars', [LecturerSeminarController::class, 'index'])->name('seminars.index');
         Route::get('seminars/{seminarProposal}', [LecturerSeminarController::class, 'show'])->name('seminars.show');

@@ -11,12 +11,14 @@
                     <div class="card-body p-4">
                         <div class="d-flex align-items-start gap-3">
                             <div class="brand-icon flex-shrink-0">
-                                <i class="bi {{ $pengajuan->status_pengajuan === 'approved' ? 'bi-check-circle-fill text-success' : ($pengajuan->status_pengajuan === 'rejected' ? 'bi-x-circle-fill text-danger' : 'bi-hourglass-split text-warning') }} fs-3"></i>
+                                <i class="bi {{ in_array($pengajuan->status_pengajuan, ['approved', 'acc_seminar']) ? 'bi-check-circle-fill text-success' : ($pengajuan->status_pengajuan === 'rejected' ? 'bi-x-circle-fill text-danger' : 'bi-hourglass-split text-warning') }} fs-3"></i>
                             </div>
                             <div class="flex-grow-1">
                                 <div class="d-flex align-items-center justify-content-between mb-1">
                                     <h5 class="fw-bold mb-0">
-                                        @if($pengajuan->status_pengajuan === 'approved')
+                                        @if($pengajuan->status_pengajuan === 'acc_seminar')
+                                            Pengajuan Telah Di-ACC Seminar Proposal
+                                        @elseif($pengajuan->status_pengajuan === 'approved')
                                             Pengajuan Judul Disetujui (ACC)
                                         @elseif($pengajuan->status_pengajuan === 'rejected')
                                             Pengajuan Judul Ditolak
@@ -30,8 +32,8 @@
                                         <a href="{{ route('student.pengajuan.export-pdf', $pengajuan->id) }}" target="_blank" class="btn btn-outline-danger btn-sm px-3 shadow-sm">
                                             <i class="bi bi-file-earmark-pdf me-1"></i> Cetak PDF
                                         </a>
-                                        <span class="badge bg-{{ $pengajuan->status_pengajuan === 'approved' ? 'success' : ($pengajuan->status_pengajuan === 'rejected' ? 'danger' : ($pengajuan->status_pengajuan === 'revision' ? 'warning text-dark' : 'primary')) }} px-3 py-2 text-uppercase">
-                                            {{ $pengajuan->status_pengajuan }}
+                                        <span class="badge bg-{{ in_array($pengajuan->status_pengajuan, ['approved', 'acc_seminar']) ? 'success' : ($pengajuan->status_pengajuan === 'rejected' ? 'danger' : ($pengajuan->status_pengajuan === 'revision' ? 'warning text-dark' : 'primary')) }} px-3 py-2 text-uppercase">
+                                            {{ str_replace('_', ' ', $pengajuan->status_pengajuan) }}
                                         </span>
                                     </div>
                                 </div>

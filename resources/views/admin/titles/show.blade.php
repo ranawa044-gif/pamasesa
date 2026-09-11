@@ -21,8 +21,8 @@
                                 NIM: {{ $pengajuan->user?->student?->nim ?? '-' }} | Kelas: {{ $pengajuan->user?->student?->kelas ?? '-' }}
                             </div>
                         </div>
-                        <span class="badge bg-{{ $pengajuan->status_pengajuan === 'approved' ? 'success' : ($pengajuan->status_pengajuan === 'rejected' ? 'danger' : ($pengajuan->status_pengajuan === 'revision' ? 'warning text-dark' : 'primary')) }} px-3 py-2 text-uppercase">
-                            {{ $pengajuan->status_pengajuan }}
+                        <span class="badge bg-{{ in_array($pengajuan->status_pengajuan, ['approved', 'acc_seminar']) ? 'success' : ($pengajuan->status_pengajuan === 'rejected' ? 'danger' : ($pengajuan->status_pengajuan === 'revision' ? 'warning text-dark' : 'primary')) }} px-3 py-2 text-uppercase">
+                            {{ str_replace('_', ' ', $pengajuan->status_pengajuan) }}
                         </span>
                     </div>
                     <hr class="my-2">

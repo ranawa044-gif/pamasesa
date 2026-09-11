@@ -2,6 +2,12 @@
 
 @php
     $badgeClasses = [
+        'pending' => 'bg-warning text-dark border border-warning-subtle',
+        'verified' => 'bg-success-subtle text-success border border-success-subtle',
+        'acc_seminar' => 'bg-success text-white border border-success',
+        'PENDING' => 'bg-warning text-dark border border-warning-subtle',
+        'VERIFIED' => 'bg-success-subtle text-success border border-success-subtle',
+        'ACC_SEMINAR' => 'bg-success text-white border border-success',
         'APPROVED' => 'bg-success-subtle text-success border border-success-subtle',
         'REVISION' => 'bg-warning-subtle text-dark border border-warning-subtle',
         'REJECTED' => 'bg-danger-subtle text-danger border border-danger-subtle',
@@ -16,8 +22,7 @@
         'DRAFT' => 'bg-light text-muted border',
         'PUBLISHED' => 'bg-success-subtle text-success border border-success-subtle',
         'ONGOING' => 'bg-info-subtle text-dark border border-info-subtle',
-        'WAITING' => 'bg-light text-muted border',
-        'PENDING' => 'bg-light text-muted border',
+        'WAITING' => 'bg-warning text-dark border border-warning-subtle',
         'APPROVED_BY_SUPERVISORS' => 'bg-success-subtle text-success border border-success-subtle',
         'PASSED' => 'bg-success-subtle text-success border border-success-subtle',
         'PASSED_WITH_REVISION' => 'bg-warning-subtle text-dark border border-warning-subtle',
@@ -32,7 +37,22 @@
         'FINAL_REPORT' => 'bg-primary-subtle text-primary border border-primary-subtle',
     ];
 
+    $customLabels = [
+        'pending' => 'Menunggu Verifikasi',
+        'PENDING' => 'Menunggu Verifikasi',
+        'verified' => 'Terverifikasi',
+        'VERIFIED' => 'Terverifikasi',
+        'acc_seminar' => 'ACC Seminar Proposal',
+        'ACC_SEMINAR' => 'ACC Seminar Proposal',
+        'WAITING' => 'Menunggu Verifikasi',
+    ];
+
     $icons = [
+        'pending' => 'bi-hourglass-split',
+        'verified' => 'bi-check-circle-fill',
+        'acc_seminar' => 'bi-award-fill',
+        'VERIFIED' => 'bi-check-circle-fill',
+        'ACC_SEMINAR' => 'bi-award-fill',
         'APPROVED' => 'bi-check-circle-fill',
         'WAITING_VALIDATION' => 'bi-hourglass-split',
         'READY_FOR_DEFENSE' => 'bi-flag-fill',
@@ -51,8 +71,8 @@
         'DRAFT' => 'bi-pencil-fill',
         'PUBLISHED' => 'bi-calendar-check-fill',
         'ONGOING' => 'bi-play-circle-fill',
-        'WAITING' => 'bi-clock',
-        'PENDING' => 'bi-clock',
+        'WAITING' => 'bi-hourglass-split',
+        'PENDING' => 'bi-hourglass-split',
         'APPROVED_BY_SUPERVISORS' => 'bi-check-circle-fill',
         'PASSED' => 'bi-award-fill',
         'PASSED_WITH_REVISION' => 'bi-pencil-square',
@@ -64,6 +84,6 @@
     ];
 @endphp
 <span {{ $attributes->merge(['class' => 'badge ' . ($badgeClasses[$status] ?? 'bg-light text-dark border')]) }}>
-    <i class="bi {{ $icons[$status] ?? 'bi-dot' }} me-1"></i>{{ $status }}
+    <i class="bi {{ $icons[$status] ?? 'bi-dot' }} me-1"></i>{{ $customLabels[$status] ?? $status }}
 </span>
 
