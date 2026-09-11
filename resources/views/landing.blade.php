@@ -77,22 +77,44 @@
 
         /* Hero Section */
         .hero-section {
-            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            background: linear-gradient(135deg, #0b0f19 0%, #0f172a 45%, #1e1b4b 100%);
             color: #ffffff;
-            padding: 5rem 0 6rem;
+            padding: 5.5rem 0 4.5rem;
             position: relative;
             overflow: hidden;
         }
 
-        .hero-section::before {
-            content: '';
+        .hero-bg-grid {
             position: absolute;
-            top: -20%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 800px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(79, 70, 229, 0.25) 0%, rgba(13, 148, 136, 0.1) 50%, transparent 70%);
+            inset: 0;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 36px 36px;
+            mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 60%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 60%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .hero-glow-1 {
+            position: absolute;
+            width: 550px;
+            height: 550px;
+            top: -120px;
+            left: -120px;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.28) 0%, transparent 70%);
+            filter: blur(50px);
+            pointer-events: none;
+        }
+
+        .hero-glow-2 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            bottom: -100px;
+            right: -80px;
+            background: radial-gradient(circle, rgba(13, 148, 136, 0.22) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 70%);
+            filter: blur(60px);
             pointer-events: none;
         }
 
@@ -100,30 +122,94 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 0.4rem 1rem;
+            background: rgba(99, 102, 241, 0.14);
+            border: 1px solid rgba(165, 180, 252, 0.25);
+            padding: 0.45rem 1.1rem;
             border-radius: 9999px;
-            font-size: 0.8rem;
+            font-size: 0.825rem;
             font-weight: 700;
             color: #a5b4fc;
-            letter-spacing: 0.05em;
-            margin-bottom: 1.5rem;
+            letter-spacing: 0.04em;
         }
 
         .hero-title {
-            font-size: clamp(2.25rem, 4.5vw, 3.75rem);
-            line-height: 1.12;
-            margin-bottom: 1.25rem;
+            font-size: clamp(2.35rem, 4.2vw, 3.5rem);
+            line-height: 1.15;
+            letter-spacing: -0.025em;
             color: #ffffff;
         }
 
-        .hero-subtitle {
-            font-size: clamp(1rem, 1.8vw, 1.2rem);
-            color: #94a3b8;
-            max-width: 680px;
-            margin: 0 auto 2.25rem;
-            line-height: 1.6;
+        .hero-gradient-text {
+            background: linear-gradient(135deg, #a5b4fc 0%, #38bdf8 50%, #34d399 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-description {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            line-height: 1.7;
+            max-width: 560px;
+        }
+
+        /* Mockup & Levitation */
+        .hero-mockup-wrapper {
+            position: relative;
+        }
+
+        .hero-mockup-card {
+            position: relative;
+            border-radius: 1.25rem;
+            padding: 0.4rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(79, 70, 229, 0.25);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: heroLevitation 6s ease-in-out infinite;
+        }
+
+        .hero-mockup-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 35px 60px -15px rgba(0, 0, 0, 0.6),
+                0 0 50px rgba(79, 70, 229, 0.4);
+            border-color: rgba(165, 180, 252, 0.4);
+        }
+
+        @keyframes heroLevitation {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .hero-mockup-img {
+            border-radius: 0.95rem;
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .hero-float-badge {
+            position: absolute;
+            bottom: -15px;
+            left: -15px;
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.75rem 1rem;
+            border-radius: 0.95rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: heroLevitation 5s ease-in-out 1s infinite;
         }
 
         /* Stat Counter Cards */
@@ -394,43 +480,87 @@
 </nav>
 
 <!-- Hero Section -->
-<section class="hero-section text-center">
-    <div class="container position-relative">
-        <div class="hero-badge">
-            <i class="bi bi-shield-check"></i> PORTAL RESMI PROYEK AKHIR D3 SISTEM INFORMASI
-        </div>
-        <h1 class="hero-title fw-extrabold">
-            Manajemen Seminar & Sidang Akhir<br>
-            <span style="background: linear-gradient(135deg, #818cf8 0%, #2dd4bf 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Terpadu, Transparan, & Terstruktur</span>
-        </h1>
-        <p class="hero-subtitle">
-            Kelola seluruh tahapan Proyek Akhir mahasiswa mulai dari seleksi judul, bimbingan berkala, seminar proposal, hingga pelaksanaan sidang akhir dalam satu platform digital.
-        </p>
+<section class="hero-section">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-glow-1"></div>
+    <div class="hero-glow-2"></div>
 
-        <div class="d-flex align-items-center justify-content-center gap-3 mb-5 flex-wrap">
-            <a href="{{ route('login') }}" class="btn-landing-primary">
-                <i class="bi bi-box-arrow-in-right fs-5"></i> Masuk ke Portal PAMASESA
-            </a>
-            <a href="#alur" class="btn-landing-outline">
-                <i class="bi bi-diagram-3 fs-5"></i> Lihat Alur & Tahapan SOP
-            </a>
+    <div class="container position-relative">
+        <div class="row align-items-center g-5">
+            <!-- Kolom Kiri (Teks) -->
+            <div class="col-lg-6 text-start">
+                <div class="hero-badge mb-3">
+                    <i class="bi bi-mortarboard-fill me-1"></i> D3 Sistem Informasi Polsub
+                </div>
+                <h1 class="hero-title fw-extrabold mb-3">
+                    Satu Portal untuk Semua Urusan <span class="hero-gradient-text">Proyek Akhir Anda.</span>
+                </h1>
+                <p class="hero-description mb-4">
+                    Ucapkan selamat tinggal pada tumpukan kertas. Ajukan judul, catat bimbingan, hingga daftar sidang akhir dengan lebih cepat, transparan, dan terstruktur melalui PAMASESA.
+                </p>
+
+                <div class="d-flex align-items-center gap-3 flex-wrap mb-4">
+                    <a href="{{ route('login') }}" class="btn-landing-primary">
+                        <i class="bi bi-box-arrow-in-right fs-5"></i> Masuk ke Portal
+                    </a>
+                    <a href="#dokumen" class="btn-landing-outline">
+                        <i class="bi bi-journal-bookmark fs-5"></i> Lihat Panduan
+                    </a>
+                </div>
+
+                <div class="d-flex align-items-center gap-4 text-slate-300 small pt-3 border-top border-white border-opacity-10 flex-wrap">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <span>100% Digital Workflow</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <span>3 Pilihan Skema PA</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <span>Monitoring Real-Time</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kolom Kanan (Visual / Mockup) -->
+            <div class="col-lg-6">
+                <div class="hero-mockup-wrapper">
+                    <div class="hero-mockup-card">
+                        <img src="{{ asset('images/hero-mockup.jpg') }}" alt="Mockup Dashboard PAMASESA" class="img-fluid hero-mockup-img shadow-sm">
+                    </div>
+                    <!-- Floating Badge -->
+                    <div class="hero-float-badge d-none d-sm-flex">
+                        <div class="brand-icon-nav" style="width: 2.25rem; height: 2.25rem; font-size: 1rem; border-radius: 0.6rem;">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <div>
+                            <div class="fw-bold text-white small">Sistem PA Terverifikasi</div>
+                            <div class="text-success small fw-semibold" style="font-size: 0.75rem;">
+                                <i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i> Portal Aktif D3 SI
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Real-time Public Stats Counter -->
-        <div class="row g-3 max-width-lg mx-auto mt-4" style="max-width: 900px;">
-            <div class="col-md-4">
+        <div class="row g-3 mt-5 pt-4 border-top border-white border-opacity-10">
+            <div class="col-md-4 col-sm-12">
                 <div class="stat-counter-card">
                     <div class="stat-counter-number">{{ $studentCount }}</div>
                     <div class="stat-counter-label">Mahasiswa Aktif PA</div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="stat-counter-card">
                     <div class="stat-counter-number">{{ $approvedProjectCount }}</div>
                     <div class="stat-counter-label">Judul Ter-ACC & Lulus</div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="stat-counter-card">
                     <div class="stat-counter-number">{{ $lecturerCount }}</div>
                     <div class="stat-counter-label">Dosen Pembimbing & Penguji</div>
