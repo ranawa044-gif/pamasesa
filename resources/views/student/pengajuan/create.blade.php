@@ -27,7 +27,7 @@
                                         @endif
                                     </h5>
                                     <div class="d-flex align-items-center gap-2">
-                                        <a href="{{ route('student.pengajuan.export-pdf', $pengajuan->id) }}" class="btn btn-outline-danger btn-sm px-3 shadow-sm">
+                                        <a href="{{ route('student.pengajuan.export-pdf', $pengajuan->id) }}" target="_blank" class="btn btn-outline-danger btn-sm px-3 shadow-sm">
                                             <i class="bi bi-file-earmark-pdf me-1"></i> Cetak PDF
                                         </a>
                                         <span class="badge bg-{{ $pengajuan->status_pengajuan === 'approved' ? 'success' : ($pengajuan->status_pengajuan === 'rejected' ? 'danger' : ($pengajuan->status_pengajuan === 'revision' ? 'warning text-dark' : 'primary')) }} px-3 py-2 text-uppercase">

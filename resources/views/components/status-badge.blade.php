@@ -1,33 +1,35 @@
+@props(['status'])
+
 @php
     $badgeClasses = [
-        'APPROVED' => 'bg-emerald-subtle text-success border border-emerald-subtle',
-        'REVISION' => 'bg-amber-subtle text-amber-emphasis border border-amber-subtle',
-        'REJECTED' => 'bg-rose-subtle text-danger border border-rose-subtle',
-        'SUBMITTED' => 'bg-indigo-subtle text-primary border border-indigo-subtle',
-        'REQUESTED' => 'bg-indigo-subtle text-primary border border-indigo-subtle',
-        'WAITING_APPROVAL' => 'bg-cyan-subtle text-cyan-emphasis border border-cyan-subtle',
-        'WAITING_EXAMINER' => 'bg-amber-subtle text-amber-emphasis border border-amber-subtle',
-        'READY_TO_SCHEDULE' => 'bg-indigo-subtle text-primary border border-indigo-subtle',
-        'SCHEDULED' => 'bg-indigo-subtle text-primary border border-indigo-subtle',
-        'FINISHED' => 'bg-emerald-subtle text-success border border-emerald-subtle',
-        'REVIEW' => 'bg-cyan-subtle text-cyan-emphasis border border-cyan-subtle',
+        'APPROVED' => 'bg-success-subtle text-success border border-success-subtle',
+        'REVISION' => 'bg-warning-subtle text-dark border border-warning-subtle',
+        'REJECTED' => 'bg-danger-subtle text-danger border border-danger-subtle',
+        'SUBMITTED' => 'bg-primary-subtle text-primary border border-primary-subtle',
+        'REQUESTED' => 'bg-primary-subtle text-primary border border-primary-subtle',
+        'WAITING_APPROVAL' => 'bg-info-subtle text-dark border border-info-subtle',
+        'WAITING_EXAMINER' => 'bg-warning-subtle text-dark border border-warning-subtle',
+        'READY_TO_SCHEDULE' => 'bg-primary-subtle text-primary border border-primary-subtle',
+        'SCHEDULED' => 'bg-primary-subtle text-primary border border-primary-subtle',
+        'FINISHED' => 'bg-success-subtle text-success border border-success-subtle',
+        'REVIEW' => 'bg-info-subtle text-dark border border-info-subtle',
         'DRAFT' => 'bg-light text-muted border',
-        'PUBLISHED' => 'bg-emerald-subtle text-success border border-emerald-subtle',
-        'ONGOING' => 'bg-cyan-subtle text-cyan-emphasis border border-cyan-subtle',
+        'PUBLISHED' => 'bg-success-subtle text-success border border-success-subtle',
+        'ONGOING' => 'bg-info-subtle text-dark border border-info-subtle',
         'WAITING' => 'bg-light text-muted border',
         'PENDING' => 'bg-light text-muted border',
-        'APPROVED_BY_SUPERVISORS' => 'bg-emerald-subtle text-success border border-emerald-subtle',
-        'PASSED' => 'bg-emerald-subtle text-success border border-emerald-subtle',
-        'PASSED_WITH_REVISION' => 'bg-amber-subtle text-amber-emphasis border border-amber-subtle',
-        'REPEAT' => 'bg-rose-subtle text-danger border border-rose-subtle',
-        'SEMINAR_PASSED' => 'bg-emerald-subtle text-success border border-emerald-subtle',
-        'SEMINAR_REPEAT' => 'bg-rose-subtle text-danger border border-rose-subtle',
-        'OPEN' => 'bg-amber-subtle text-amber-emphasis border border-amber-subtle',
-        'DONE' => 'bg-emerald-subtle text-success border border-emerald-subtle',
-        'WAITING_VALIDATION' => 'bg-amber-subtle text-amber-emphasis border border-amber-subtle',
-        'READY_FOR_DEFENSE' => 'bg-indigo-subtle text-primary border border-indigo-subtle',
-        'REVISION_AFTER_SEMINAR' => 'bg-amber-subtle text-amber-emphasis border border-amber-subtle',
-        'FINAL_REPORT' => 'bg-indigo-subtle text-primary border border-indigo-subtle',
+        'APPROVED_BY_SUPERVISORS' => 'bg-success-subtle text-success border border-success-subtle',
+        'PASSED' => 'bg-success-subtle text-success border border-success-subtle',
+        'PASSED_WITH_REVISION' => 'bg-warning-subtle text-dark border border-warning-subtle',
+        'REPEAT' => 'bg-danger-subtle text-danger border border-danger-subtle',
+        'SEMINAR_PASSED' => 'bg-success-subtle text-success border border-success-subtle',
+        'SEMINAR_REPEAT' => 'bg-danger-subtle text-danger border border-danger-subtle',
+        'OPEN' => 'bg-warning-subtle text-dark border border-warning-subtle',
+        'DONE' => 'bg-success-subtle text-success border border-success-subtle',
+        'WAITING_VALIDATION' => 'bg-warning-subtle text-dark border border-warning-subtle',
+        'READY_FOR_DEFENSE' => 'bg-primary-subtle text-primary border border-primary-subtle',
+        'REVISION_AFTER_SEMINAR' => 'bg-warning-subtle text-dark border border-warning-subtle',
+        'FINAL_REPORT' => 'bg-primary-subtle text-primary border border-primary-subtle',
     ];
 
     $icons = [
@@ -61,7 +63,7 @@
         'DONE' => 'bi-check-circle-fill',
     ];
 @endphp
-<span class="badge {{ $badgeClasses[$status] ?? 'bg-light text-dark border' }}">
+<span {{ $attributes->merge(['class' => 'badge ' . ($badgeClasses[$status] ?? 'bg-light text-dark border')]) }}>
     <i class="bi {{ $icons[$status] ?? 'bi-dot' }} me-1"></i>{{ $status }}
 </span>
 

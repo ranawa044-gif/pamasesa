@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
             --app-bg: #f8fafc;
@@ -18,6 +19,8 @@
             --app-sidebar-border: rgba(255, 255, 255, 0.08);
             --app-sidebar-text: #94a3b8;
             --app-sidebar-active: #ffffff;
+            --sidebar-width: 260px;
+            --bs-offcanvas-zindex: 1055;
             --app-text: #0f172a;
             --app-muted: #64748b;
             --app-border: #e2e8f0;
@@ -61,17 +64,14 @@
 
         /* Sidebar Styling */
         .sidebar {
-            min-height: 100vh;
-            max-height: 100vh;
-            overflow-y: auto;
-            background: linear-gradient(180deg, #1e293b 0%, var(--app-sidebar-bg) 100%);
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, #1e293b 0%, var(--app-sidebar-bg) 100%) !important;
             border-right: 1px solid var(--app-sidebar-border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
             display: flex;
             flex-direction: column;
             padding: 1.15rem 0.9rem;
+            z-index: 1055 !important;
+            pointer-events: auto !important;
         }
 
         .sidebar::-webkit-scrollbar {
@@ -187,6 +187,8 @@
             font-size: 0.835rem;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
+            cursor: pointer;
+            pointer-events: auto;
         }
 
         .sidebar-nav a i {
@@ -519,16 +521,58 @@
             box-shadow: 0 0 0 4px #ffffff, 0 2px 8px rgba(79, 70, 229, 0.3);
         }
 
+        /* Layout & Responsive Media Queries */
+        .mobile-topbar {
+            background: #0f172a;
+            border-bottom: 1px solid var(--app-sidebar-border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1030;
+        }
+
+        @media (min-width: 992px) {
+            .sidebar {
+                position: fixed !important;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: var(--sidebar-width) !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+                overflow-y: auto !important;
+                transform: none !important;
+                visibility: visible !important;
+                z-index: 1055 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                pointer-events: auto !important;
+            }
+
+            .main-content, .content-area {
+                margin-left: var(--sidebar-width) !important;
+                width: calc(100% - var(--sidebar-width)) !important;
+                min-height: 100vh;
+            }
+        }
+
         @media (max-width: 991.98px) {
             .sidebar {
-                min-height: auto;
-                max-height: none;
-                overflow-y: visible;
-                position: static;
+                width: 280px !important;
+                max-width: 85vw !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+                overflow-y: auto !important;
+                padding: 1rem !important;
+                z-index: 1055 !important;
+                pointer-events: auto !important;
             }
-            .content-area {
-                padding: 1.25rem;
+
+            .main-content, .content-area {
+                margin-left: 0 !important;
+                width: 100% !important;
+                padding: 1.25rem !important;
+                min-height: calc(100vh - 56px);
             }
+
             .topbar {
                 flex-direction: column;
                 align-items: flex-start;
@@ -538,11 +582,42 @@
     </style>
 </head>
 <body>
-<div class="container-fluid p-0">
-    <div class="row g-0">
-        <!-- Sidebar Navigation -->
-        <aside class="col-lg-2 sidebar">
-            <div class="brand-mark">
+    <!-- Header Mobile (Top Bar) -->
+    <header class="mobile-topbar d-block d-lg-none sticky-top">
+        <div class="d-flex align-items-center justify-content-between px-3 py-2">
+            <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-outline-light border-0 p-1 px-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas" aria-label="Buka Menu Navigasi">
+                    <i class="fas fa-bars fs-5"></i>
+                </button>
+                <div class="brand-icon" style="width: 2rem; height: 2rem; font-size: 0.95rem; border-radius: 0.5rem;">
+                    <i class="bi bi-mortarboard-fill"></i>
+                </div>
+                <span class="brand-title fs-6 mb-0 text-white">PAMASESA</span>
+            </div>
+            <span class="role-badge role-badge-{{ auth()->user()?->role ?? 'GUEST' }}">
+                {{ auth()->user()?->role ?? 'GUEST' }}
+            </span>
+        </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar offcanvas-lg offcanvas-start text-white" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
+            <!-- Header Offcanvas untuk Mobile -->
+            <div class="offcanvas-header d-flex d-lg-none align-items-center justify-content-between pb-3 mb-2 border-bottom border-secondary border-opacity-25">
+                <div class="d-flex align-items-center gap-2" id="sidebarOffcanvasLabel">
+                    <div class="brand-icon" style="width: 2rem; height: 2rem; font-size: 0.95rem; border-radius: 0.5rem;">
+                        <i class="bi bi-mortarboard-fill"></i>
+                    </div>
+                    <div>
+                        <div class="brand-title fs-6">PAMASESA</div>
+                        <div class="brand-subtitle" style="font-size: 0.65rem;">D3 Sistem Informasi</div>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#sidebarOffcanvas" aria-label="Tutup"></button>
+            </div>
+
+            <!-- Desktop Brand Mark -->
+            <div class="brand-mark d-none d-lg-flex">
                 <div class="brand-icon">
                     <i class="bi bi-mortarboard-fill"></i>
                 </div>
@@ -552,14 +627,20 @@
                 </div>
             </div>
 
+            <div class="offcanvas-body d-flex flex-column p-0 flex-grow-1">
+
             <div class="user-profile-widget">
-                <div class="user-avatar">
-                    {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
+                <div class="user-avatar overflow-hidden p-0">
+                    @if(auth()->user()?->foto_profil && Storage::disk('public')->exists(auth()->user()->foto_profil))
+                        <img src="{{ asset('storage/' . auth()->user()->foto_profil) }}" alt="Avatar" class="w-100 h-100 object-fit-cover">
+                    @else
+                        {{ strtoupper(substr(auth()->user()?->name ?? 'U', 0, 1)) }}
+                    @endif
                 </div>
                 <div class="overflow-hidden">
-                    <div class="fw-bold text-white text-truncate" style="font-size: 0.85rem;">{{ auth()->user()->name }}</div>
-                    <span class="role-badge role-badge-{{ auth()->user()->role }}">
-                        {{ auth()->user()->role }}
+                    <div class="fw-bold text-white text-truncate" style="font-size: 0.85rem;">{{ auth()->user()?->name ?? 'User' }}</div>
+                    <span class="role-badge role-badge-{{ auth()->user()?->role ?? 'GUEST' }}">
+                        {{ auth()->user()?->role ?? 'GUEST' }}
                     </span>
                 </div>
             </div>
@@ -614,6 +695,9 @@
                     <a class="{{ request()->routeIs('student.final-defenses.*') ? 'active' : '' }}" href="{{ route('student.final-defenses.index') }}">
                         <i class="bi bi-award-fill"></i> Sidang Akhir
                     </a>
+                    <a class="{{ request()->routeIs('student.profile.*') ? 'active' : '' }}" href="{{ route('student.profile.index') }}">
+                        <i class="bi bi-gear-fill"></i> Pengaturan Akun
+                    </a>
                 @elseif(auth()->user()->role === 'DOSEN')
                     <a class="{{ request()->routeIs('lecturer.guidances.*') ? 'active' : '' }}" href="{{ route('lecturer.guidances.index') }}">
                         <i class="bi bi-people-fill"></i> Mahasiswa Bimbingan
@@ -630,10 +714,11 @@
                     <i class="bi bi-box-arrow-left me-1"></i> Logout
                 </button>
             </form>
-        </aside>
+        </div>
+    </aside>
 
-        <!-- Main Content Area -->
-        <main class="col-lg-10 content-area">
+    <!-- Main Content Area -->
+    <main class="main-content content-area">
             <!-- Topbar Header -->
             <div class="topbar">
                 <div>
@@ -692,10 +777,24 @@
             @endif
 
             @yield('content')
-        </main>
-    </div>
-</div>
+    </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Bersihkan backdrop offcanvas jika beralih ke tampilan desktop
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 992) {
+            document.querySelectorAll('.offcanvas-backdrop').forEach(function(el) { el.remove(); });
+            document.body.classList.remove('modal-open');
+            document.body.style.removeProperty('overflow');
+            document.body.style.removeProperty('padding-right');
+            const sidebar = document.getElementById('sidebarOffcanvas');
+            if (sidebar && sidebar.classList.contains('show')) {
+                const bsOffcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+                if (bsOffcanvas) bsOffcanvas.hide();
+            }
+        }
+    });
+</script>
 </body>
 </html>
 

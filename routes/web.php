@@ -23,6 +23,7 @@ use App\Http\Controllers\Student\ProgressLogController;
 use App\Http\Controllers\Student\SeminarController as StudentSeminarController;
 use App\Http\Controllers\Admin\LecturerImportController;
 use App\Http\Controllers\Admin\StudentImportController;
+use App\Http\Controllers\Student\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\AnnouncementController;
@@ -41,6 +42,7 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('guidance-comments', [GuidanceCommentController::class, 'store'])->name('guidance-comments.store');
     Route::get('announcements/{announcement}/download', [AnnouncementController::class, 'download'])->name('admin.announcements.download');
+    Route::get('student/pengajuan/{id}/export-pdf', [PengajuanController::class, 'exportPdf'])->name('student.pengajuan.export-pdf');
 
     Route::middleware('role:ADMIN')->prefix('admin')->name('admin.')->group(function (): void {
         Route::resource('students', StudentController::class)->except('show');
@@ -69,7 +71,6 @@ Route::middleware('auth')->group(function (): void {
     Route::middleware('role:MAHASISWA')->prefix('student')->name('student.')->group(function (): void {
         Route::get('pengajuan', [PengajuanController::class, 'create'])->name('pengajuan.create');
         Route::post('pengajuan', [PengajuanController::class, 'store'])->name('pengajuan.store');
-        Route::get('pengajuan/{id}/export-pdf', [PengajuanController::class, 'exportPdf'])->name('pengajuan.export-pdf');
         Route::get('final-project', [PengajuanController::class, 'create'])->name('final-project.edit');
         Route::post('final-project', [PengajuanController::class, 'store'])->name('final-project.store');
         Route::get('progress', [ProgressLogController::class, 'index'])->name('progress.index');
@@ -82,6 +83,10 @@ Route::middleware('auth')->group(function (): void {
         Route::post('seminars/revisions/{seminarRevision}/complete', [StudentSeminarController::class, 'completeRevision'])->name('seminars.revisions.complete');
         Route::get('final-defenses', [StudentFinalDefenseController::class, 'index'])->name('final-defenses.index');
         Route::post('final-defenses', [StudentFinalDefenseController::class, 'store'])->name('final-defenses.store');
+        // Pengaturan Akun
+        Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
+        Route::put('profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+        Route::put('profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo');
     });
 
     Route::middleware('role:DOSEN')->prefix('lecturer')->name('lecturer.')->group(function (): void {

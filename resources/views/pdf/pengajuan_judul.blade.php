@@ -94,9 +94,31 @@
             color: #333;
             margin-bottom: 4px;
         }
+        .table-detail {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+        .table-detail th,
+        .table-detail td {
+            border: 1px solid #000;
+            padding: 5px 8px;
+            vertical-align: top;
+            font-size: 11pt;
+        }
+        .table-detail td.label-col {
+            width: 28%;
+            font-weight: bold;
+            background-color: #f5f5f5;
+        }
+        .table-detail tr {
+            page-break-inside: avoid;
+        }
         .footer-sign {
             margin-top: 30px;
             width: 100%;
+            page-break-inside: avoid;
         }
         .footer-sign td {
             width: 50%;
@@ -151,7 +173,7 @@
             <td class="separator">:</td>
             <td>{{ $student?->phone ?? '-' }}</td>
         </tr>
-        @if($student?->guardian_phone)
+        @if(!empty($student?->guardian_phone))
         <tr>
             <td class="label">No. HP Orang Tua/Kerabat</td>
             <td class="separator">:</td>
@@ -221,12 +243,141 @@
         @endif
     </div>
 
+    {{-- SECTION E. DETAIL SISTEM --}}
+    <div class="section-title">E. DETAIL SISTEM</div>
+
+    @if($pengajuan->jenis_skema === 'perancangan')
+        @php
+            $dp = $pengajuan->detailPerancangan;
+        @endphp
+        <table class="table-detail" border="1" cellpadding="5" cellspacing="0">
+            <tr>
+                <td class="label-col">Jenis Sistem</td>
+                <td>{{ $dp?->jenis_sistem ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="label-col">Proses Bisnis Sistem</td>
+                <td class="text-justify">{!! nl2br(e($dp?->proses_bisnis ?? '-')) !!}</td>
+            </tr>
+            <tr>
+                <td class="label-col">Jumlah Aktor</td>
+                <td>{{ $dp?->jumlah_aktor ? $dp->jumlah_aktor . ' Aktor' : '-' }}</td>
+            </tr>
+            <tr>
+                <td class="label-col">Metode Pengembangan</td>
+                <td>{{ $dp?->metode_pengembangan ?? '-' }}</td>
+            </tr>
+            @if(!empty($dp?->metode_pendekatan))
+            <tr>
+                <td class="label-col">Metode / Pendekatan Khusus</td>
+                <td>
+                    @if(is_array($dp->metode_pendekatan))
+                        {{ implode(', ', $dp->metode_pendekatan) }}
+                    @else
+                        {{ $dp->metode_pendekatan }}
+                    @endif
+                </td>
+            </tr>
+            @endif
+            <tr>
+                <td class="label-col">Fitur Utama</td>
+                <td class="text-justify">{!! nl2br(e($dp?->fitur_utama ?? '-')) !!}</td>
+            </tr>
+            <tr>
+                <td class="label-col">Tools Perancangan</td>
+                <td>{{ $dp?->tools_perancangan ?? '-' }}</td>
+            </tr>
+        </table>
+
+    @elseif($pengajuan->jenis_skema === 'implementasi')
+        @php
+            $di = $pengajuan->detailImplementasi;
+        @endphp
+        <table class="table-detail" border="1" cellpadding="5" cellspacing="0">
+            <tr>
+                <td class="label-col">Jenis Sistem</td>
+                <td>{{ $di?->jenis_sistem ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="label-col">Proses Bisnis Sistem</td>
+                <td class="text-justify">{!! nl2br(e($di?->proses_bisnis ?? '-')) !!}</td>
+            </tr>
+            <tr>
+                <td class="label-col">Jumlah Aktor</td>
+                <td>{{ $di?->jumlah_aktor ? $di->jumlah_aktor . ' Aktor' : '-' }}</td>
+            </tr>
+            <tr>
+                <td class="label-col">Metode Pengembangan</td>
+                <td>{{ $di?->metode_pengembangan ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="label-col">Fitur Utama</td>
+                <td class="text-justify">{!! nl2br(e($di?->fitur_utama ?? '-')) !!}</td>
+            </tr>
+            <tr>
+                <td class="label-col">Stack Teknologi</td>
+                <td>{{ $di?->teknologi ?? '-' }}</td>
+            </tr>
+            @if(!empty($di?->metode_pendekatan))
+            <tr>
+                <td class="label-col">Metode / Pendekatan Khusus</td>
+                <td>
+                    @if(is_array($di->metode_pendekatan))
+                        {{ implode(', ', $di->metode_pendekatan) }}
+                    @else
+                        {{ $di->metode_pendekatan }}
+                    @endif
+                </td>
+            </tr>
+            @endif
+            @if(!empty($di?->rencana_pengujian))
+            <tr>
+                <td class="label-col">Rencana Pengujian</td>
+                <td>
+                    @if(is_array($di->rencana_pengujian))
+                        {{ implode(', ', $di->rencana_pengujian) }}
+                    @else
+                        {{ $di->rencana_pengujian }}
+                    @endif
+                </td>
+            </tr>
+            @endif
+        </table>
+
+    @elseif($pengajuan->jenis_skema === 'prestasi')
+        @php
+            $dpr = $pengajuan->detailPrestasi;
+        @endphp
+        <table class="table-detail" border="1" cellpadding="5" cellspacing="0">
+            <tr>
+                <td class="label-col">Nama Kompetisi / Lomba</td>
+                <td>{{ $dpr?->nama_lomba ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="label-col">Penyelenggara</td>
+                <td>{{ $dpr?->penyelenggara ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="label-col">Tingkat Kompetisi</td>
+                <td>{{ $dpr?->tingkat ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="label-col">Tanggal Pelaksanaan</td>
+                <td>{{ $dpr?->tanggal_pelaksanaan?->translatedFormat('d F Y') ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="label-col">URL Karya / Produk</td>
+                <td>{{ $dpr?->url_produk ?? '-' }}</td>
+            </tr>
+        </table>
+    @endif
+
     {{-- TANDA TANGAN --}}
     <table class="footer-sign">
         <tr>
             <td></td>
             <td style="text-align: center;">
-                Semarang, {{ $pengajuan->created_at->translatedFormat('d F Y') }}<br>
+                Semarang, {{ $pengajuan->created_at?->translatedFormat('d F Y') ?? now()->translatedFormat('d F Y') }}<br>
                 Mahasiswa Pengusul,
                 <br><br><br><br><br>
                 <strong><u>{{ $student?->nama ?? $user->name }}</u></strong><br>

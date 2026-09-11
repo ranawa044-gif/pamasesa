@@ -340,7 +340,7 @@
                     </div>
                     <div>
                         @if($finalProject?->seminarProposal)
-                            <x-status-badge :status="$finalProject->seminarProposal->status" />
+                            <x-status-badge :status="$finalProject->seminarProposal->status" class="text-dark" />
                         @elseif($isApproved)
                             <span class="badge bg-light text-muted border">Belum Terdaftar</span>
                         @else

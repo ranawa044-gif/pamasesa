@@ -24,19 +24,33 @@
             font-family: var(--font-body);
             color: var(--app-text);
             background-color: #0f172a;
-            background-image: 
-                radial-gradient(at 10% 10%, rgba(79, 70, 229, 0.25) 0px, transparent 50%),
-                radial-gradient(at 90% 90%, rgba(13, 148, 136, 0.20) 0px, transparent 50%),
-                radial-gradient(at 50% 50%, rgba(30, 41, 59, 0.8) 0px, transparent 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 1.5rem;
             -webkit-font-smoothing: antialiased;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(79, 70, 229, 0.25) 0px, transparent 50%),
+                radial-gradient(at 90% 90%, rgba(13, 148, 136, 0.20) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(30, 41, 59, 0.8) 0px, transparent 100%);
         }
 
         .login-wrapper {
+            position: relative;
+            z-index: 1;
             width: 100%;
             max-width: 440px;
         }
@@ -137,30 +151,6 @@
             box-shadow: 0 12px 24px -4px rgba(79, 70, 229, 0.5);
         }
 
-        .quick-seeder-box {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #e2e8f0;
-            text-align: center;
-        }
-
-        .quick-seeder-title {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 0.75rem;
-        }
-
-        .btn-seeder {
-            font-size: 0.775rem;
-            font-weight: 600;
-            padding: 0.35rem 0.65rem;
-            border-radius: 0.5rem;
-            transition: all 0.15s ease;
-        }
-
         .alert-danger {
             background: #fef2f2;
             border-color: #fecaca;
@@ -168,9 +158,14 @@
             border-radius: 0.75rem;
             font-size: 0.875rem;
         }
+
+        .login-card a.text-muted:hover {
+            color: var(--app-primary) !important;
+        }
     </style>
 </head>
 <body>
+<div id="particles-js"></div>
 <div class="login-wrapper">
     <div class="login-card">
         <div class="brand-header">
@@ -220,31 +215,85 @@
             </button>
         </form>
 
-        <!-- Quick Fill Helper for Demo / Testing -->
-        <div class="quick-seeder-box">
-            <div class="quick-seeder-title">Demoku Akun Cepat</div>
-            <div class="d-flex justify-content-center gap-2 flex-wrap">
-                <button type="button" class="btn btn-outline-danger btn-seeder" onclick="fillLogin('admin@pamasesa.local', 'password')">
-                    <i class="bi bi-shield-lock-fill me-1"></i> Admin
-                </button>
-                <button type="button" class="btn btn-outline-primary btn-seeder" onclick="fillLogin('mahasiswa@pamasesa.local', 'password')">
-                    <i class="bi bi-mortarboard-fill me-1"></i> Mahasiswa
-                </button>
-                <button type="button" class="btn btn-outline-info btn-seeder" onclick="fillLogin('dosen@pamasesa.local', 'password')">
-                    <i class="bi bi-person-badge-fill me-1"></i> Dosen
-                </button>
-            </div>
+        <div class="mt-4 text-center">
+            <small class="text-muted" style="font-size: 0.75rem; line-height: 1.5; display: inline-block;">
+                &copy; {{ date('Y') }} Chepy Perdana.<br>
+                Supported by <a href="https://luminara.web.id" target="_blank" class="text-decoration-none text-muted fw-bold">Luminara.web.id</a>
+            </small>
         </div>
     </div>
 </div>
-
-<script>
-    function fillLogin(email, pass) {
-        document.getElementById('email').value = email;
-        document.getElementById('password').value = pass;
-    }
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    particlesJS('particles-js', {
+        particles: {
+            number: {
+                value: 65,
+                density: {
+                    enable: true,
+                    value_area: 800
+                }
+            },
+            color: {
+                value: ['#818cf8', '#4f46e5', '#06b6d4']
+            },
+            shape: {
+                type: 'circle'
+            },
+            opacity: {
+                value: 0.6,
+                random: false
+            },
+            size: {
+                value: 3,
+                random: true
+            },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: '#6366f1',
+                opacity: 0.35,
+                width: 1.2
+            },
+            move: {
+                enable: true,
+                speed: 1.8,
+                direction: 'none',
+                random: false,
+                straight: false,
+                out_mode: 'out',
+                bounce: false
+            }
+        },
+        interactivity: {
+            detect_on: 'window',
+            events: {
+                onhover: {
+                    enable: true,
+                    mode: 'grab'
+                },
+                onclick: {
+                    enable: true,
+                    mode: 'push'
+                },
+                resize: true
+            },
+            modes: {
+                grab: {
+                    distance: 180,
+                    line_linked: {
+                        opacity: 0.85
+                    }
+                },
+                push: {
+                    particles_nb: 3
+                }
+            }
+        },
+        retina_detect: true
+    });
+</script>
 </body>
 </html>
 

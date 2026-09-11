@@ -240,6 +240,7 @@ class PengajuanController extends Controller
         // Atur ukuran kertas A4 portrait
         $pdf->setPaper('a4', 'portrait');
 
-        return $pdf->download('Form_Pengajuan_Judul_' . $nim . '.pdf');
+        // Tampilkan preview PDF di browser (stream)
+        return $pdf->stream('Form_Pengajuan_Judul_' . $nim . '.pdf');
     }
 }
