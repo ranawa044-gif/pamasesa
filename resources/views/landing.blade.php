@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
             --app-primary: #4f46e5;
@@ -446,6 +447,185 @@
             color: #94a3b8;
             font-size: 0.85rem;
         }
+
+        /* =========================================================
+           VERTICAL TIMELINE SECTION
+           ========================================================= */
+        .v-timeline-wrapper {
+            position: relative;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .v-timeline-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            bottom: 35px;
+            left: 50%;
+            width: 3px;
+            background: linear-gradient(180deg, #4f46e5 0%, #cbd5e1 50%, #10b981 100%);
+            transform: translateX(-50%);
+            border-radius: 999px;
+        }
+
+        .v-timeline-item {
+            position: relative;
+            width: 50%;
+            margin-bottom: 2.75rem;
+        }
+
+        .v-timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .v-timeline-item.left {
+            left: 0;
+            padding-right: 3.5rem;
+        }
+
+        .v-timeline-item.right {
+            left: 50%;
+            padding-left: 3.5rem;
+        }
+
+        .v-timeline-node {
+            position: absolute;
+            top: 18px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 3px solid var(--app-primary);
+            color: var(--app-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            z-index: 3;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.18);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .v-timeline-item.left .v-timeline-node {
+            right: -24px;
+            left: auto;
+        }
+
+        .v-timeline-item.right .v-timeline-node {
+            left: -24px;
+            right: auto;
+        }
+
+        .v-timeline-item:hover .v-timeline-node {
+            transform: scale(1.15);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.28);
+        }
+
+        /* Danger / Highlight Node (Batas Akhir Pengajuan Judul) */
+        .v-timeline-node.danger-node {
+            border-color: #ef4444;
+            background: #ef4444;
+            color: #ffffff;
+            animation: pulseDangerNode 2s infinite;
+        }
+
+        @keyframes pulseDangerNode {
+            0% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+            }
+            70% {
+                box-shadow: 0 0 0 14px rgba(239, 68, 68, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+
+        /* Success Node (Sidang Akhir) */
+        .v-timeline-node.success-node {
+            border-color: #10b981;
+            background: #ffffff;
+            color: #10b981;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+        }
+
+        /* Warning Node */
+        .v-timeline-node.warning-node {
+            border-color: #f59e0b;
+            background: #ffffff;
+            color: #d97706;
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25);
+        }
+
+        .v-timeline-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1.15rem;
+            padding: 1.5rem 1.75rem;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+            transition: all 0.25s ease;
+            position: relative;
+            text-align: left;
+        }
+
+        .v-timeline-item:hover .v-timeline-card {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+            border-color: #cbd5e1;
+        }
+
+        /* Urgent Card Highlight (Batas Akhir Pengajuan Judul) */
+        .v-timeline-card.card-urgent {
+            border: 2px solid #ef4444;
+            background: linear-gradient(145deg, #ffffff 0%, #fff5f5 100%);
+            box-shadow: 0 8px 24px rgba(239, 68, 68, 0.12);
+        }
+
+        .v-timeline-card.card-urgent:hover {
+            box-shadow: 0 14px 32px rgba(239, 68, 68, 0.2);
+            border-color: #dc2626;
+        }
+
+        .timeline-date-badge {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.35rem 0.75rem;
+            border-radius: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 767.98px) {
+            .v-timeline-wrapper::before {
+                left: 22px;
+            }
+
+            .v-timeline-item {
+                width: 100% !important;
+                left: 0 !important;
+                padding-left: 60px !important;
+                padding-right: 0 !important;
+                margin-bottom: 2rem;
+            }
+
+            .v-timeline-node {
+                left: 0 !important;
+                right: auto !important;
+                top: 14px;
+                width: 44px;
+                height: 44px;
+                font-size: 1rem;
+            }
+
+            .v-timeline-card {
+                padding: 1.25rem;
+            }
+        }
     </style>
     <link rel="icon" href="{{ asset('favicon.jpg') }}" type="image/jpg">
 </head>
@@ -468,6 +648,7 @@
             <a href="#alur" class="nav-link-custom">Alur SOP</a>
             <a href="#dokumen" class="nav-link-custom">Dokumen</a>
             <a href="#skema" class="nav-link-custom">Skema PA</a>
+            <a href="#jadwal" class="nav-link-custom">Jadwal & Timeline</a>
             <a href="#bidang-fokus" class="nav-link-custom">Bidang Fokus</a>
             <a href="#faq" class="nav-link-custom">FAQ</a>
         </div>
@@ -823,6 +1004,174 @@
     </div>
 </section>
 
+<!-- Section Timeline & Jadwal Penting -->
+<section id="jadwal" class="py-5 bg-white border-top border-bottom">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <span class="badge bg-indigo-subtle text-primary border border-primary border-opacity-25 px-3 py-2 fw-bold mb-2">
+                <i class="fa-regular fa-calendar-days me-1"></i> AGENDA AKADEMIK
+            </span>
+            <h2 class="section-title">Timeline & Jadwal Penting Proyek Akhir 2026/2027</h2>
+            <p class="text-muted text-center mx-auto" style="max-width: 680px;">
+                Pantau seluruh jadwal dan batas tenggat waktu krusial mulai dari sosialisasi, pengajuan judul, hingga sidang kelulusan agar progres Proyek Akhir Anda tepat waktu.
+            </p>
+        </div>
+
+        <div class="v-timeline-wrapper">
+            <!-- Timeline Item 1: Sosialisasi -->
+            <div class="v-timeline-item left">
+                <div class="v-timeline-node">
+                    <i class="fa-solid fa-flag-checkered"></i>
+                </div>
+                <div class="v-timeline-card">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                        <span class="badge bg-primary-subtle text-primary border border-primary border-opacity-25 px-2.5 py-1">
+                            Titik Awal
+                        </span>
+                        <span class="timeline-date-badge bg-light text-secondary border">
+                            <i class="fa-regular fa-calendar me-1"></i> 15 Sep 2026
+                        </span>
+                    </div>
+                    <h5 class="fw-bold fs-5 mb-2 text-slate-900">Sosialisasi & Pembekalan PA</h5>
+                    <p class="text-muted small mb-0">
+                        Pemberian pedoman Proyek Akhir tahun akademik 2026/2027, sosialisasi 3 skema (Perancangan, Implementasi, & Prestasi), tata tulis dokumen, serta aktivasi akun portal PAMASESA.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Timeline Item 2: Batas Akhir Pengajuan Judul (PENTING / DANGER) -->
+            <div class="v-timeline-item right">
+                <div class="v-timeline-node danger-node">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="v-timeline-card card-urgent">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                        <span class="badge bg-danger text-white px-2.5 py-1 shadow-sm">
+                            <i class="fa-solid fa-circle-exclamation me-1"></i> PENTING / DEADLINE
+                        </span>
+                        <span class="timeline-date-badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25">
+                            <i class="fa-solid fa-clock me-1"></i> 05 Okt 2026 • 23:59 WIB
+                        </span>
+                    </div>
+                    <h5 class="fw-bold fs-5 mb-1 text-danger">Batas Akhir Pengajuan Judul</h5>
+                    <p class="text-muted small mb-2">
+                        Batas akhir penginputan formulir proposal judul, dokumen pendukung, dan pemilihan skema Proyek Akhir di portal PAMASESA.
+                    </p>
+                    <div class="p-2.5 rounded-3 bg-danger bg-opacity-10 text-danger-emphasis small border border-danger border-opacity-25 d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-bell text-danger fs-6"></i>
+                        <span><strong>Penting:</strong> Portal akan terkunci otomatis setelah batas akhir. Tidak ada toleransi keterlambatan tanpa konfirmasi koordinator.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Item 3: Pengumuman Dosen Pembimbing -->
+            <div class="v-timeline-item left">
+                <div class="v-timeline-node">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+                <div class="v-timeline-card">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                        <span class="badge bg-indigo-subtle text-primary border border-primary border-opacity-25 px-2.5 py-1">
+                            Penetapan SK
+                        </span>
+                        <span class="timeline-date-badge bg-light text-secondary border">
+                            <i class="fa-regular fa-calendar me-1"></i> 15 Okt 2026
+                        </span>
+                    </div>
+                    <h5 class="fw-bold fs-5 mb-2 text-slate-900">Pengumuman Dosen Pembimbing</h5>
+                    <p class="text-muted small mb-0">
+                        Pengumuman hasil review judul dan penerbitan Surat Keputusan (SK) pembimbing. Mahasiswa dapat melihat Dosen Pembimbing 1 dan 2 langsung di dashboard akun masing-masing.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Timeline Item 4: Batas Pendaftaran Seminar Proposal -->
+            <div class="v-timeline-item right">
+                <div class="v-timeline-node">
+                    <i class="fa-solid fa-file-signature"></i>
+                </div>
+                <div class="v-timeline-card">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                        <span class="badge bg-info-subtle text-info-emphasis border border-info border-opacity-25 px-2.5 py-1">
+                            Pendaftaran Sempro
+                        </span>
+                        <span class="timeline-date-badge bg-light text-secondary border">
+                            <i class="fa-regular fa-calendar me-1"></i> 15 Des 2026
+                        </span>
+                    </div>
+                    <h5 class="fw-bold fs-5 mb-2 text-slate-900">Batas Pendaftaran Seminar Proposal</h5>
+                    <p class="text-muted small mb-0">
+                        Batas akhir pengunggahan draft naskah proposal BAB 1-3 yang telah mendapatkan persetujuan (acc) dosen pembimbing beserta formulir pendaftaran ujian seminar proposal.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Timeline Item 5: Pelaksanaan Seminar Proposal -->
+            <div class="v-timeline-item left">
+                <div class="v-timeline-node">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                </div>
+                <div class="v-timeline-card">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                        <span class="badge bg-secondary-subtle text-secondary-emphasis border px-2.5 py-1">
+                            Ujian Sempro
+                        </span>
+                        <span class="timeline-date-badge bg-light text-secondary border">
+                            <i class="fa-regular fa-calendar me-1"></i> 05 – 12 Jan 2027
+                        </span>
+                    </div>
+                    <h5 class="fw-bold fs-5 mb-2 text-slate-900">Pelaksanaan Seminar Proposal</h5>
+                    <p class="text-muted small mb-0">
+                        Presentasi usulan penelitian di hadapan tim dosen penguji untuk memvalidasi kelayakan rumusan masalah, metodologi, dan desain solusi teknis yang diajukan.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Timeline Item 6: Batas Pendaftaran Sidang Akhir -->
+            <div class="v-timeline-item right">
+                <div class="v-timeline-node warning-node">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+                <div class="v-timeline-card">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                        <span class="badge bg-warning-subtle text-warning-emphasis border border-warning border-opacity-50 px-2.5 py-1 fw-bold">
+                            Tenggat Berkas Sidang
+                        </span>
+                        <span class="timeline-date-badge bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-25">
+                            <i class="fa-solid fa-clock me-1"></i> 15 Jun 2027 • 23:59 WIB
+                        </span>
+                    </div>
+                    <h5 class="fw-bold fs-5 mb-2 text-slate-900">Batas Pendaftaran Sidang Akhir</h5>
+                    <p class="text-muted small mb-0">
+                        Batas akhir upload laporan lengkap (BAB 1–5), aplikasi/prototipe siap uji, persetujuan pembimbing, bebas tanggungan perpustakaan/jurusan, dan lembar bimbingan minimal 8 kali.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Timeline Item 7: Pelaksanaan Sidang Akhir -->
+            <div class="v-timeline-item left">
+                <div class="v-timeline-node success-node">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="v-timeline-card">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                        <span class="badge bg-success-subtle text-success border border-success border-opacity-25 px-2.5 py-1 fw-bold">
+                            Tahap Final (Kelulusan)
+                        </span>
+                        <span class="timeline-date-badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">
+                            <i class="fa-solid fa-calendar-check me-1"></i> 01 – 10 Jul 2027
+                        </span>
+                    </div>
+                    <h5 class="fw-bold fs-5 mb-2 text-slate-900">Pelaksanaan Sidang Akhir</h5>
+                    <p class="text-muted small mb-0">
+                        Ujian sidang akhir tugas akhir berupa demonstrasi sistem langsung, verifikasi hasil pengujian, dan sesi tanya jawab dewan penguji sebagai penentu kelulusan mahasiswa D3 Sistem Informasi.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Section FAQ -->
 <section id="faq" class="py-5" style="background-color: #f8fafc;">
     <div class="container py-4" style="max-width: 840px;">
@@ -921,6 +1270,7 @@
                     <li><a href="#alur" class="footer-link"><i class="bi bi-chevron-right me-1 text-primary small"></i> Alur SOP</a></li>
                     <li><a href="#dokumen" class="footer-link"><i class="bi bi-chevron-right me-1 text-primary small"></i> Dokumen PA</a></li>
                     <li><a href="#skema" class="footer-link"><i class="bi bi-chevron-right me-1 text-primary small"></i> 3 Skema PA</a></li>
+                    <li><a href="#jadwal" class="footer-link"><i class="bi bi-chevron-right me-1 text-primary small"></i> Jadwal & Timeline</a></li>
                     <li><a href="#bidang-fokus" class="footer-link"><i class="bi bi-chevron-right me-1 text-primary small"></i> Rumpun Penelitian</a></li>
                     <li><a href="{{ route('login') }}" class="footer-link"><i class="bi bi-chevron-right me-1 text-primary small"></i> Portal Login</a></li>
                 </ul>
