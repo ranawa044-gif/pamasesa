@@ -739,6 +739,32 @@
                     </div>
                 </div>
             </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed fw-bold text-slate-800" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Apakah juara lomba bisa dikonversi menjadi Proyek Akhir?
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body text-muted small">
+                        Ya, sangat bisa! D3 Sistem Informasi menyediakan <strong>Skema Mahasiswa Berprestasi</strong>. Jika Anda memenangkan lomba tingkat Nasional/Internasional (seperti KMIPN, Gemastik, dll) yang relevan dengan IT, karya Anda dapat dikonversi menjadi Proyek Akhir tanpa harus membuat sistem baru dari nol.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFive">
+                    <button class="accordion-button collapsed fw-bold text-slate-800" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        Apa bedanya skema Perancangan dan Implementasi?
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body text-muted small">
+                        <strong>Skema Perancangan</strong> berfokus pada kedalaman analisis bisnis dan desain prototipe (seperti UI/UX Figma atau arsitektur sistem), sedangkan <strong>skema Implementasi</strong> mewajibkan mahasiswa untuk memprogram (coding) dan menghasilkan aplikasi yang siap pakai.
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
