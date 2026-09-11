@@ -1,9 +1,21 @@
 @extends('layouts.app', ['heading' => 'Seminar Proposal Saya'])
 
 @section('content')
+@php
+    $pengajuan = $pengajuan ?? (auth()->user()->pengajuanPa ?? $finalProject?->student?->user?->pengajuanPa);
+@endphp
+
 <div class="d-flex justify-content-end mb-3">
     @if($finalProject && !$finalProject->seminarProposal)
-        <a class="btn btn-primary" href="{{ route('student.seminars.create') }}">Daftar Seminar</a>
+        @if($pengajuan && $pengajuan->is_acc_p1 && $pengajuan->is_acc_p2)
+            <a class="btn btn-primary" href="{{ route('student.seminars.create') }}">
+                <i class="bi bi-calendar-plus me-1"></i> Daftar Seminar
+            </a>
+        @else
+            <button class="btn btn-secondary" disabled title="Kedua dosen pembimbing harus memberikan ACC terlebih dahulu">
+                <i class="bi bi-lock-fill me-1"></i> Belum Memenuhi Syarat
+            </button>
+        @endif
     @endif
 </div>
 
@@ -16,15 +28,29 @@
             <div class="list-group list-group-flush">
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     <span>Judul ACC</span>
-                    <span class="badge bg-{{ $finalProject->status === 'APPROVED' ? 'success' : 'secondary' }}">{{ $finalProject->status === 'APPROVED' ? '✓' : '✕' }}</span>
+                    <span class="badge bg-{{ in_array($finalProject->status, ['APPROVED', 'READY_FOR_DEFENSE'], true) ? 'success' : 'secondary' }}">{{ in_array($finalProject->status, ['APPROVED', 'READY_FOR_DEFENSE'], true) ? '✓' : '✕' }}</span>
                 </div>
                 <div class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>Pembimbing 1</span>
-                    <span class="badge bg-{{ $finalProject->supervisorOne() ? 'success' : 'secondary' }}">{{ $finalProject->supervisorOne() ? '✓' : '✕' }}</span>
+                    <div>
+                        <span>ACC Pembimbing 1</span>
+                        @if($finalProject->supervisorOne()?->lecturer)
+                            <small class="text-muted d-block">{{ $finalProject->supervisorOne()->lecturer->nama }}</small>
+                        @endif
+                    </div>
+                    <span class="badge bg-{{ ($pengajuan && $pengajuan->is_acc_p1) ? 'success' : 'danger' }}">
+                        {{ ($pengajuan && $pengajuan->is_acc_p1) ? '✓' : '✕' }}
+                    </span>
                 </div>
                 <div class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>Pembimbing 2</span>
-                    <span class="badge bg-{{ $finalProject->supervisorTwo() ? 'success' : 'secondary' }}">{{ $finalProject->supervisorTwo() ? '✓' : '✕' }}</span>
+                    <div>
+                        <span>ACC Pembimbing 2</span>
+                        @if($finalProject->supervisorTwo()?->lecturer)
+                            <small class="text-muted d-block">{{ $finalProject->supervisorTwo()->lecturer->nama }}</small>
+                        @endif
+                    </div>
+                    <span class="badge bg-{{ ($pengajuan && $pengajuan->is_acc_p2) ? 'success' : 'danger' }}">
+                        {{ ($pengajuan && $pengajuan->is_acc_p2) ? '✓' : '✕' }}
+                    </span>
                 </div>
             </div>
         </div>

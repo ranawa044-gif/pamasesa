@@ -23,23 +23,30 @@ class SeminarController extends Controller
             'seminarProposal.schedule.revisions.lecturer',
         ])->first();
 
-        return view('student.seminar.index', compact('finalProject'));
+        $pengajuan = $request->user()->pengajuanPa ?? $finalProject?->student?->user?->pengajuanPa;
+
+        return view('student.seminar.index', compact('finalProject', 'pengajuan'));
     }
 
     public function create(Request $request): View
     {
         $finalProject = $request->user()->student?->finalProject;
+        $pengajuan = $request->user()->pengajuanPa ?? $finalProject?->student?->user?->pengajuanPa;
+
         abort_unless($finalProject && $finalProject->status === 'APPROVED', 403, 'Judul harus ACC terlebih dahulu.');
+        abort_unless($pengajuan && $pengajuan->is_acc_p1 && $pengajuan->is_acc_p2, 403, 'Kedua dosen pembimbing harus memberikan ACC terlebih dahulu.');
         abort_unless($finalProject->supervisorOne() && $finalProject->supervisorTwo(), 403, 'Pembimbing harus sudah ditentukan.');
 
-        return view('student.seminar.form', compact('finalProject'));
+        return view('student.seminar.form', compact('finalProject', 'pengajuan'));
     }
 
     public function store(StoreSeminarProposalRequest $request): RedirectResponse
     {
         $finalProject = FinalProject::findOrFail($request->input('final_project_id'));
+        $pengajuan = $finalProject->student?->user?->pengajuanPa;
 
         abort_unless($finalProject->status === 'APPROVED', 403, 'Judul harus ACC terlebih dahulu.');
+        abort_unless($pengajuan && $pengajuan->is_acc_p1 && $pengajuan->is_acc_p2, 403, 'Kedua dosen pembimbing harus memberikan ACC terlebih dahulu.');
         abort_unless($finalProject->supervisorOne() && $finalProject->supervisorTwo(), 403, 'Pembimbing harus sudah ditentukan.');
 
         $file = $request->file('proposal_file')->store('seminars/proposals', 'public');

@@ -64,11 +64,12 @@ class GuidanceController extends Controller
         return back()->with('success', 'Progress bimbingan berhasil diverifikasi dan balasan komentar tersimpan.');
     }
 
-    public function accSeminarProposal(Request $request, FinalProject $finalProject): RedirectResponse
+    public function accSeminar(Request $request, FinalProject $finalProject): RedirectResponse
     {
         $this->authorizeLecturerProject($request, $finalProject);
 
         $lecturer = $request->user()->lecturer;
+        $lecturerId = $lecturer?->id;
         $student = $finalProject->student;
         $user = $student?->user;
 
@@ -79,40 +80,73 @@ class GuidanceController extends Controller
             $pengajuanPa = PengajuanPa::where('user_id', $user->id)->latest()->first();
         }
 
-        $action = $request->input('action', 'acc');
-
-        if ($action === 'cancel') {
-            if ($pengajuanPa) {
-                $pengajuanPa->update([
-                    'status_pengajuan' => 'approved',
-                    'catatan_review' => 'Status ACC Seminar Proposal dibatalkan oleh ' . ($lecturer?->nama ?? 'Dosen Pembimbing') . ' pada ' . now()->translatedFormat('d F Y H:i') . '.',
-                ]);
-            }
-            return back()->with('info', 'Status ACC Seminar Proposal mahasiswa berhasil dibatalkan.');
-        }
-
-        $supervisorName = $lecturer?->nama ?? 'Dosen Pembimbing';
-
         if (!$pengajuanPa) {
             $pengajuanPa = PengajuanPa::create([
                 'user_id' => $user->id,
                 'jenis_skema' => 'implementasi',
-                'status_pengajuan' => 'acc_seminar',
-                'catatan_review' => 'Disetujui untuk mengikuti Seminar Proposal (ACC Sempro) oleh ' . $supervisorName . ' pada ' . now()->translatedFormat('d F Y H:i') . '.',
-            ]);
-        } else {
-            $pengajuanPa->update([
-                'status_pengajuan' => 'acc_seminar',
-                'catatan_review' => 'Disetujui untuk mengikuti Seminar Proposal (ACC Sempro) oleh ' . $supervisorName . ' pada ' . now()->translatedFormat('d F Y H:i') . '.',
+                'status_pengajuan' => 'approved',
+                'is_acc_p1' => false,
+                'is_acc_p2' => false,
             ]);
         }
+
+        $isP1 = ($finalProject->supervisorOne()?->lecturer_id === $lecturerId);
+        $isP2 = ($finalProject->supervisorTwo()?->lecturer_id === $lecturerId);
+
+        abort_unless($isP1 || $isP2, 403, 'Anda bukan pembimbing 1 maupun pembimbing 2 dari pengajuan ini.');
+
+        $action = $request->input('action', 'acc');
+        $supervisorTitle = $isP1 ? 'Pembimbing 1' : 'Pembimbing 2';
+        $supervisorName = $lecturer?->nama ?? 'Dosen Pembimbing';
+
+        if ($action === 'cancel') {
+            if ($isP1) {
+                $pengajuanPa->is_acc_p1 = false;
+            }
+            if ($isP2) {
+                $pengajuanPa->is_acc_p2 = false;
+            }
+            $pengajuanPa->status_pengajuan = 'approved';
+            $pengajuanPa->catatan_review = "Persetujuan ACC Seminar dibatalkan oleh {$supervisorTitle} ({$supervisorName}) pada " . now()->translatedFormat('d F Y H:i') . '.';
+            $pengajuanPa->save();
+
+            return back()->with('info', "Persetujuan ACC Seminar dari {$supervisorTitle} berhasil dibatalkan.");
+        }
+
+        // Aksi ACC: update is_acc_p1 jika pembimbing 1, is_acc_p2 jika pembimbing 2
+        if ($isP1) {
+            $pengajuanPa->is_acc_p1 = true;
+        }
+        if ($isP2) {
+            $pengajuanPa->is_acc_p2 = true;
+        }
+
+        // Cek apakah KEDUA pembimbing telah memberikan ACC
+        $bothAcc = $pengajuanPa->is_acc_p1 && $pengajuanPa->is_acc_p2;
+
+        if ($bothAcc) {
+            $pengajuanPa->status_pengajuan = 'acc_seminar';
+            $pengajuanPa->catatan_review = "KEDUA Dosen Pembimbing telah memberikan ACC Seminar Proposal pada " . now()->translatedFormat('d F Y H:i') . '. Mahasiswa memenuhi syarat untuk mendaftar Seminar Proposal.';
+        } else {
+            $pengajuanPa->catatan_review = "ACC Seminar Proposal diberikan oleh {$supervisorTitle} ({$supervisorName}) pada " . now()->translatedFormat('d F Y H:i') . '. Menunggu persetujuan pembimbing lainnya.';
+        }
+        $pengajuanPa->save();
 
         // Pastikan status final_project minimal APPROVED
         if (!in_array($finalProject->status, ['APPROVED', 'READY_FOR_DEFENSE'], true)) {
             $finalProject->update(['status' => 'APPROVED']);
         }
 
-        return back()->with('success', 'Berhasil! Mahasiswa telah di-ACC untuk Seminar Proposal. Status utama di tabel pengajuan PA telah diperbarui.');
+        $message = $bothAcc
+            ? "Berhasil! KEDUA dosen pembimbing telah memberikan ACC. Mahasiswa sekarang berhak mendaftar Seminar Proposal."
+            : "Persetujuan ACC Seminar dari {$supervisorTitle} berhasil disimpan. Menunggu ACC dari pembimbing lainnya.";
+
+        return back()->with('success', $message);
+    }
+
+    public function accSeminarProposal(Request $request, FinalProject $finalProject): RedirectResponse
+    {
+        return $this->accSeminar($request, $finalProject);
     }
 
     public function approveDefense(Request $request, ReviewDefenseApprovalRequest $approvalRequest, FinalProject $finalProject): RedirectResponse

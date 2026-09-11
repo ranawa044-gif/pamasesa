@@ -17,8 +17,18 @@ class PengajuanPa extends Model
         'user_id',
         'jenis_skema',
         'status_pengajuan',
+        'is_acc_p1',
+        'is_acc_p2',
         'catatan_review',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'is_acc_p1' => 'boolean',
+            'is_acc_p2' => 'boolean',
+        ];
+    }
 
     public function user(): BelongsTo
     {

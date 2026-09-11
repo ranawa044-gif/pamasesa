@@ -32,78 +32,86 @@
      ==================================================================== -->
 @php
     $pengajuanPaData = $pengajuanPa ?? $finalProject->student?->user?->pengajuanPa;
-    $isAccSempro = ($pengajuanPaData?->status_pengajuan === 'acc_seminar');
-    $isSupervisor = auth()->user()->lecturer && (
-        $finalProject->supervisorOne()?->lecturer_id === auth()->user()->lecturer->id ||
-        $finalProject->supervisorTwo()?->lecturer_id === auth()->user()->lecturer->id
-    );
+    $lecturerId = auth()->user()->lecturer?->id;
+    $isP1 = ($finalProject->supervisorOne()?->lecturer_id === $lecturerId);
+    $isP2 = ($finalProject->supervisorTwo()?->lecturer_id === $lecturerId);
+    $isSupervisor = $isP1 || $isP2;
+    $myRoleName = $isP1 ? 'Pembimbing 1' : ($isP2 ? 'Pembimbing 2' : 'Dosen Pembimbing');
+    $myAcc = $isP1 ? ($pengajuanPaData?->is_acc_p1 ?? false) : ($pengajuanPaData?->is_acc_p2 ?? false);
+    $bothAcc = ($pengajuanPaData?->is_acc_p1 && $pengajuanPaData?->is_acc_p2);
 @endphp
 
 @if($isSupervisor)
-    @if($isAccSempro)
-        <div class="card shadow-sm border-0 mb-4 border-start border-4 border-success bg-success bg-opacity-10">
-            <div class="card-body p-4">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="rounded-circle bg-success text-white p-3 d-flex align-items-center justify-content-center shadow-sm" style="width: 56px; height: 56px; min-width: 56px;">
-                            <i class="bi bi-patch-check-fill fs-2"></i>
+    <div class="card shadow-sm border-0 mb-4 border-start border-4 {{ $bothAcc ? 'border-success bg-success bg-opacity-10' : ($myAcc ? 'border-primary bg-primary bg-opacity-10' : 'border-success bg-white') }}">
+        <div class="card-body p-4">
+            <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+                <div>
+                    <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                        <span class="badge {{ $bothAcc ? 'bg-success' : 'bg-primary' }} text-white px-2.5 py-1 fw-bold">
+                            <i class="bi bi-mortarboard-fill me-1"></i> PERSETUJUAN SEMINAR PROPOSAL
+                        </span>
+                        @if($bothAcc)
+                            <span class="badge bg-success text-white"><i class="bi bi-check2-all me-1"></i>KEDUA PEMBIMBING TELAH ACC</span>
+                        @else
+                            <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i>MENUNGGU ACC KEDUA PEMBIMBING</span>
+                        @endif
+                    </div>
+                    <h4 class="h5 fw-bold text-slate-900 mb-1">Persetujuan Kelayakan Seminar Proposal</h4>
+                    <p class="text-muted small mb-3" style="max-width: 680px;">
+                        Sesuai aturan akademik, mahasiswa hanya berhak mendaftar Seminar Proposal jika <strong>KEDUA dosen pembimbing</strong> telah memberikan ACC.
+                    </p>
+
+                    <!-- Status ACC Tiap Pembimbing -->
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                        <div class="p-2 px-3 rounded-2 border bg-white small d-flex align-items-center gap-2">
+                            <span class="text-muted">Pembimbing 1 ({{ $finalProject->supervisorOne()?->lecturer?->nama ?? 'Belum ditentukan' }}):</span>
+                            @if($pengajuanPaData?->is_acc_p1)
+                                <span class="badge bg-success"><i class="bi bi-check-circle-fill me-1"></i>Sudah ACC</span>
+                            @else
+                                <span class="badge bg-secondary"><i class="bi bi-x-circle me-1"></i>Belum ACC</span>
+                            @endif
                         </div>
-                        <div>
-                            <div class="d-flex align-items-center gap-2 mb-1">
-                                <span class="badge bg-success text-white px-2.5 py-1 fw-bold">
-                                    <i class="bi bi-check2-all me-1"></i> TELAH DI-ACC
-                                </span>
-                                <span class="badge bg-white text-success border border-success border-opacity-25">Tabel Pengajuan PA: ACC_SEMINAR</span>
-                            </div>
-                            <h4 class="h5 fw-bold text-success mb-1">Mahasiswa Telah Memperoleh ACC Seminar Proposal</h4>
-                            <p class="text-secondary small mb-0">
-                                Mahasiswa telah disetujui untuk maju ke tahapan Seminar Proposal. Berkas pengajuan judul dan logbook bimbingan telah dinyatakan memenuhi syarat.
-                            </p>
+                        <div class="p-2 px-3 rounded-2 border bg-white small d-flex align-items-center gap-2">
+                            <span class="text-muted">Pembimbing 2 ({{ $finalProject->supervisorTwo()?->lecturer?->nama ?? 'Belum ditentukan' }}):</span>
+                            @if($pengajuanPaData?->is_acc_p2)
+                                <span class="badge bg-success"><i class="bi bi-check-circle-fill me-1"></i>Sudah ACC</span>
+                            @else
+                                <span class="badge bg-secondary"><i class="bi bi-x-circle me-1"></i>Belum ACC</span>
+                            @endif
                         </div>
                     </div>
-                    <div class="text-md-end flex-shrink-0">
-                        <form method="post" action="{{ route('lecturer.guidances.acc-seminar', $finalProject) }}" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan status ACC Seminar Proposal untuk mahasiswa ini?')">
+                </div>
+
+                <!-- Tombol Aksi untuk Dosen yang Login -->
+                <div class="text-lg-end flex-shrink-0">
+                    @if($myAcc)
+                        <div class="text-start text-lg-end mb-2">
+                            <span class="badge bg-success text-white px-3 py-2 fs-6 shadow-sm">
+                                <i class="bi bi-check-circle-fill me-1"></i> Anda ({{ $myRoleName }}) Sudah Memberikan ACC
+                            </span>
+                        </div>
+                        <form method="post" action="{{ route('lecturer.guidances.acc-seminar', $finalProject) }}" onsubmit="return confirm('Batalkan persetujuan ACC Seminar Proposal dari Anda ({{ $myRoleName }})?')">
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="action" value="cancel">
                             <button type="submit" class="btn btn-outline-danger btn-sm px-3 shadow-sm">
-                                <i class="bi bi-arrow-counterclockwise me-1"></i> Batalkan ACC Seminar
+                                <i class="bi bi-arrow-counterclockwise me-1"></i> Batalkan ACC Saya
                             </button>
                         </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @else
-        <div class="card shadow-sm border-0 mb-4 border-start border-4 border-success bg-white">
-            <div class="card-body p-4">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-                    <div>
-                        <div class="d-flex align-items-center gap-2 mb-1">
-                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1 fw-bold">
-                                <i class="bi bi-mortarboard-fill me-1"></i> PERSETUJUAN UJIAN
-                            </span>
-                            <span class="badge bg-light text-muted border">Status Utama: {{ strtoupper($pengajuanPaData?->status_pengajuan ?? 'APPROVED') }}</span>
-                        </div>
-                        <h4 class="h5 fw-bold text-slate-900 mb-1">Persetujuan Seminar Proposal (ACC Sempro)</h4>
-                        <p class="text-muted small mb-0" style="max-width: 650px;">
-                            Jika bimbingan proposal BAB 1–3 mahasiswa telah tuntas dan siap diuji, klik tombol di samping untuk memberikan <strong>ACC Seminar Proposal</strong>. Status utama mahasiswa di tabel <code>pengajuan_pa</code> akan otomatis diperbarui menjadi <strong>ACC_SEMINAR</strong>.
-                        </p>
-                    </div>
-                    <div class="text-md-end flex-shrink-0">
-                        <form method="post" action="{{ route('lecturer.guidances.acc-seminar', $finalProject) }}" onsubmit="return confirm('Yakin ingin memberikan ACC Seminar Proposal untuk mahasiswa ini? Status utama mahasiswa di tabel pengajuan_pa akan langsung diperbarui.')">
+                    @else
+                        <form method="post" action="{{ route('lecturer.guidances.acc-seminar', $finalProject) }}" onsubmit="return confirm('Apakah Anda yakin ingin memberikan ACC Seminar Proposal sebagai {{ $myRoleName }}?')">
                             @csrf
                             @method('PUT')
                             <button type="submit" class="btn btn-success btn-lg px-4 py-3 shadow fw-bold d-inline-flex align-items-center gap-2">
                                 <i class="bi bi-award-fill fs-3"></i>
-                                <span>ACC Seminar Proposal</span>
+                                <span>ACC Seminar Proposal ({{ $myRoleName }})</span>
                             </button>
                         </form>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
-    @endif
+    </div>
 @endif
 
 <div class="card shadow-sm border-0 mb-4">
