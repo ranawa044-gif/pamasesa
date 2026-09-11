@@ -218,6 +218,59 @@
             margin-bottom: 1.25rem;
         }
 
+        /* Schema Cards */
+        .schema-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1.25rem;
+            padding: 2rem 1.75rem;
+            transition: all 0.25s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+        }
+
+        .schema-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.1);
+            border-color: #cbd5e1;
+        }
+
+        .schema-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .schema-card-perancangan::before {
+            background: linear-gradient(90deg, #4f46e5, #8b5cf6);
+        }
+
+        .schema-card-implementasi::before {
+            background: linear-gradient(90deg, #0d9488, #10b981);
+        }
+
+        .schema-card-prestasi::before {
+            background: linear-gradient(90deg, #f59e0b, #ef4444);
+        }
+
+        .schema-icon-box {
+            width: 3.25rem;
+            height: 3.25rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+
         /* Buttons */
         .btn-landing-primary {
             font-family: var(--font-heading);
@@ -326,7 +379,8 @@
 
         <div class="d-none d-md-flex align-items-center gap-3">
             <a href="#alur" class="nav-link-custom">Alur SOP</a>
-            <a href="#dokumen" class="nav-link-custom">Dokumen & Pengumuman</a>
+            <a href="#dokumen" class="nav-link-custom">Dokumen</a>
+            <a href="#skema" class="nav-link-custom">Skema PA</a>
             <a href="#bidang-fokus" class="nav-link-custom">Bidang Fokus</a>
             <a href="#faq" class="nav-link-custom">FAQ</a>
         </div>
@@ -509,8 +563,87 @@
     </div>
 </section>
 
+<!-- Section 3 Skema Proyek Akhir -->
+<section id="skema" class="py-5 bg-white">
+    <div class="container py-4">
+        <div class="text-center max-width-md mx-auto mb-5">
+            <span class="badge bg-indigo-subtle text-primary border px-3 py-2 fw-bold mb-2">JALUR PENYELESAIAN PA</span>
+            <h2 class="section-title">3 Skema Proyek Akhir</h2>
+            <p class="section-subtitle">Pilih jalur penyelesaian Proyek Akhir yang paling sesuai dengan minat dan pencapaian Anda.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Skema 1: Perancangan -->
+            <div class="col-lg-4 col-md-6">
+                <div class="schema-card schema-card-perancangan">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="schema-icon-box" style="background: rgba(79, 70, 229, 0.12); color: #4f46e5;">
+                            <i class="bi bi-bezier2"></i>
+                        </div>
+                        <span class="badge border px-2 py-1 small fw-bold" style="background: rgba(79, 70, 229, 0.1); color: #4338ca; border-color: rgba(79, 70, 229, 0.25) !important;">Skema 1</span>
+                    </div>
+                    <h4 class="fw-bold fs-5 mb-2 text-slate-900">Skema Perancangan</h4>
+                    <p class="text-muted small mb-4 flex-grow-1" style="line-height: 1.65;">
+                        Berfokus pada analisis dan perancangan sistem/UI/UX tanpa kewajiban coding hingga tahap deployment akhir. Output berupa dokumen perancangan dan prototipe.
+                    </p>
+                    <div class="pt-3 border-top border-slate-100 mt-auto">
+                        <div class="d-flex align-items-center gap-2 small fw-semibold" style="color: #334155;">
+                            <i class="bi bi-file-earmark-diff fs-6" style="color: #4f46e5;"></i>
+                            <span>Output: Dokumen & Prototipe</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skema 2: Implementasi -->
+            <div class="col-lg-4 col-md-6">
+                <div class="schema-card schema-card-implementasi">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="schema-icon-box" style="background: rgba(13, 148, 136, 0.12); color: #0d9488;">
+                            <i class="bi bi-code-slash"></i>
+                        </div>
+                        <span class="badge border px-2 py-1 small fw-bold" style="background: rgba(13, 148, 136, 0.1); color: #0f766e; border-color: rgba(13, 148, 136, 0.25) !important;">Skema 2</span>
+                    </div>
+                    <h4 class="fw-bold fs-5 mb-2 text-slate-900">Skema Implementasi</h4>
+                    <p class="text-muted small mb-4 flex-grow-1" style="line-height: 1.65;">
+                        Berfokus pada pengembangan sistem nyata (software/hardware) berbasis penyelesaian masalah di lapangan. Output berupa aplikasi fungsional.
+                    </p>
+                    <div class="pt-3 border-top border-slate-100 mt-auto">
+                        <div class="d-flex align-items-center gap-2 small fw-semibold" style="color: #334155;">
+                            <i class="bi bi-laptop fs-6" style="color: #0d9488;"></i>
+                            <span>Output: Aplikasi Fungsional</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skema 3: Mahasiswa Berprestasi -->
+            <div class="col-lg-4 col-md-12">
+                <div class="schema-card schema-card-prestasi">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="schema-icon-box" style="background: rgba(245, 158, 11, 0.14); color: #d97706;">
+                            <i class="bi bi-trophy-fill"></i>
+                        </div>
+                        <span class="badge border px-2 py-1 small fw-bold" style="background: rgba(245, 158, 11, 0.1); color: #b45309; border-color: rgba(245, 158, 11, 0.25) !important;">Skema 3</span>
+                    </div>
+                    <h4 class="fw-bold fs-5 mb-2 text-slate-900">Skema Mahasiswa Berprestasi</h4>
+                    <p class="text-muted small mb-4 flex-grow-1" style="line-height: 1.65;">
+                        Jalur ekuivalensi bagi mahasiswa yang memenangkan kompetisi tingkat Nasional/Internasional (misal: KMIPN, Gemastik) atau memiliki karya luar biasa yang diakui. Output berupa laporan konversi prestasi.
+                    </p>
+                    <div class="pt-3 border-top border-slate-100 mt-auto">
+                        <div class="d-flex align-items-center gap-2 small fw-semibold" style="color: #334155;">
+                            <i class="bi bi-award fs-6" style="color: #d97706;"></i>
+                            <span>Output: Laporan Konversi Prestasi</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Section Bidang Fokus Penelitian SI -->
-<section id="bidang-fokus" class="py-5 bg-white">
+<section id="bidang-fokus" class="py-5" style="background-color: #f8fafc;">
     <div class="container py-4">
         <div class="text-center max-width-md mx-auto mb-5">
             <span class="badge bg-indigo-subtle text-primary border px-3 py-2 fw-bold mb-2">RUMPUN KEPAKARAN</span>
@@ -630,6 +763,7 @@
                 <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
                     <li><a href="#alur" class="footer-link"><i class="bi bi-chevron-right me-1 text-primary small"></i> Alur SOP</a></li>
                     <li><a href="#dokumen" class="footer-link"><i class="bi bi-chevron-right me-1 text-primary small"></i> Dokumen PA</a></li>
+                    <li><a href="#skema" class="footer-link"><i class="bi bi-chevron-right me-1 text-primary small"></i> 3 Skema PA</a></li>
                     <li><a href="#bidang-fokus" class="footer-link"><i class="bi bi-chevron-right me-1 text-primary small"></i> Rumpun Penelitian</a></li>
                     <li><a href="{{ route('login') }}" class="footer-link"><i class="bi bi-chevron-right me-1 text-primary small"></i> Portal Login</a></li>
                 </ul>
