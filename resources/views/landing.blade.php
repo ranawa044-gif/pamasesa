@@ -400,7 +400,7 @@
                 <div class="step-card">
                     <div class="step-badge">1</div>
                     <h5 class="fw-bold fs-6 mb-2">Pengajuan Judul</h5>
-                    <p class="text-muted small mb-0">Mahasiswa mengisi form pengajuan judul yang menyertakan latar belakang masalah nyata, lokasi objek, metode, dan tech stack.</p>
+                    <p class="text-muted small mb-0">Mahasiswa memilih skema Proyek Akhir (Perancangan, Implementasi, atau Prestasi) dan mengisi form usulan beserta dokumen pendukung sesuai persyaratan masing-masing skema.</p>
                 </div>
             </div>
             <div class="col-md-6 col-lg-3">

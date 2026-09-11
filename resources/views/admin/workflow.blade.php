@@ -14,7 +14,7 @@
             <div class="timeline-step">
                 <div class="timeline-number">1</div>
                 <h6 class="fw-bold mb-1 text-slate-800 fs-6">Pengajuan Judul (Mahasiswa)</h6>
-                <p class="text-muted mb-0">Mahasiswa mengajukan judul Proyek Akhir melalui menu <span class="badge bg-light text-dark border">Pengajuan Judul</span>. Mahasiswa mengisi usulan judul beserta masalah nyata, objek/lokasi, rencana sistem, metode, tech stack, dan usulan pembimbing.</p>
+                <p class="text-muted mb-0">Mahasiswa memilih skema Proyek Akhir (Perancangan, Implementasi, atau Prestasi) dan mengisi form usulan beserta dokumen pendukung sesuai persyaratan masing-masing skema melalui menu <span class="badge bg-light text-dark border">Pengajuan Judul</span>.</p>
             </div>
 
             <!-- 2. Validasi Judul & Plotting Pembimbing -->
